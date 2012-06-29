@@ -14,6 +14,10 @@ group :development, :test do
   gem 'annotate', '2.4.0'
 end
 
+group :production do
+  gem activerecord-postgresql-adapter, '0.0.1'
+end
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
