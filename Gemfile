@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.6'
+gem 'thin', '1.3.1'
 gem 'devise', '2.1.2'
 
 # Bundle edge Rails instead:
@@ -10,12 +11,11 @@ group :development, :test do
   gem 'sqlite3', '1.3.6'
   gem 'pry', '0.9.9.6'
   gem 'pry-rails', '0.1.6'
-  gem 'thin', '1.3.1'
   gem 'annotate', '2.4.0'
 end
 
 group :production do
-  gem activerecord-postgresql-adapter, '0.0.1'
+  gem 'pg', '0.14.0'
 end
 
 # Gems used only for assets and not required
