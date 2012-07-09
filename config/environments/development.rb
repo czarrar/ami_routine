@@ -24,7 +24,7 @@ AmiRoutine::Application.configure do
     address: "smtp.gmail.com",
     port: 587,
     domain: "localhost.com:3000",
-    authentication: :login,
+    authentication: :plain,
     enable_starttls_auto: true,
     user_name: ENV["GMAIL_USERNAME"],
     password: ENV["GMAIL_PASSWORD"]
