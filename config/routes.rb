@@ -1,4 +1,12 @@
 AmiRoutine::Application.routes.draw do
+  get "routines/edit"
+
+  get "routines/index"
+
+  get "routines/new"
+
+  get "routines/show"
+
   get "home/index"
   get "home/contact"
   
@@ -11,7 +19,11 @@ AmiRoutine::Application.routes.draw do
   root :to => "home#index"
   
   resources :users
-
+  
+  resources :children
+  
+  resources :routines
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

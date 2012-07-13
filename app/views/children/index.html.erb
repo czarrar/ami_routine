@@ -1,0 +1,29 @@
+<h1>Children</h1>
+
+<table class="table">
+  <thead>
+	  <tr>
+      <th>ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Parent</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @children.each do |child| %>
+      <tr>
+        <td><%= child.id %></td>
+        <td><%= child.first_name %></td>
+        <td><%= child.last_name %></td>
+        <td>TODO</td>
+        <td>
+          <%= link_to 'Edit', edit_child_path(child), :class => "btn btn-mini" %>
+          <%= link_to 'Delete', child, :confirm => "Are you sure?", :method => :delete, :class => 'btn btn-mini btn-danger' %>
+        </td>  
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New', new_child_path, :class => 'btn btn-primary' %>

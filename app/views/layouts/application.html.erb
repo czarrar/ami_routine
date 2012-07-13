@@ -54,7 +54,12 @@
             <li class="nav-header">
                 Internal Pages
             </li>
-            
+            <li>
+              <%= link_to "Children", children_path %>
+            </li>
+            <li>
+              <%= link_to "Routines", routines_path %>
+            </li>
             <% end %>
             <% if current_user.has_role? :teacher %>
             <li class="nav-header">

@@ -11,7 +11,12 @@
 #
 
 class Child < ActiveRecord::Base
-  attr_accessible :first_name, :last_name
+  attr_accessible :first_name, :last_name, :user_id
   
   belongs_to :user
+  has_many :routines
+  
+  def name
+    "#{first_name} #{last_name}"
+  end
 end

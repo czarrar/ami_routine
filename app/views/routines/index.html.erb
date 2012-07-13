@@ -1,0 +1,31 @@
+<h1>Routines</h1>
+
+<table class="table">
+  <thead>
+	  <tr>
+      <th>ID</th>
+      <th>Teacher</th>
+      <th>Child</th>
+      <th>Date</th>
+      <th>Content</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @routines.each do |routine| %>
+      <tr>
+        <td><%= routine.id %></td>
+        <td>TODO</td>
+        <td><%= routine.child.first_name + " " + routine.child.last_name %></td>
+        <td><%= routine.routine_date %></td>
+        <td><%= routine.content %></td>
+        <td>
+          <%= link_to 'Edit', edit_routine_path(routine), :class => "btn btn-mini" %>
+          <%= link_to 'Delete', routine, :confirm => "Are you sure?", :method => :delete, :class => 'btn btn-mini btn-danger' %>
+        </td>  
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New', new_routine_path, :class => 'btn btn-primary' %>

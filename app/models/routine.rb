@@ -15,4 +15,5 @@ class Routine < ActiveRecord::Base
   attr_accessible :child_id, :content, :routine_date
   
   belongs_to :user
+  belongs_to :child
 end
