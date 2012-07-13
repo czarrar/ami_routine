@@ -13,7 +13,7 @@ group :development, :test do
   gem 'sqlite3', '1.3.6'
   gem 'pry', '0.9.9.6'
   gem 'pry-rails', '0.1.6'
-  gem 'annotate', '2.4.0'
+  gem 'annotate', '~> 2.4.1.beta'
 end
 
 group :production do
