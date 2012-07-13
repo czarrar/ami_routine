@@ -1,0 +1,34 @@
+<h1>Users</h1>
+
+<table class="table">
+  <thead>
+	  <tr>
+      <th>ID</th>
+      <th>Email</th>
+      <th>Roles</th>
+      <th>Recent Sign In</th>
+      <th>IP from Recent Sign In</th>
+      <th>Created On</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.email %></td>
+        <td><%= user.roles.map{ |role| role.name }.join(", ") %></td>
+        <td><%= user.current_sign_in_at %></td>
+        <td><%= user.current_sign_in_ip %></td>
+        <td><%= user.created_at %></td>
+        <td>
+          <%= link_to 'Edit', edit_user_path(user), :class => "btn btn-mini" %>
+          <%= link_to 'Delete', user, :confirm => "Are you sure?", :method => :delete, :class => 'btn btn-mini btn-danger' %>
+        </td>
+  
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New', new_user_path, :class => 'btn btn-primary' %>

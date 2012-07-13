@@ -1,11 +1,16 @@
 AmiRoutine::Application.routes.draw do
   get "home/index"
-
   get "home/contact"
-
-  devise_for :users
+  
+  devise_for :users, :path_prefix => 'd'
+  devise_scope :user do
+    get '/login' => 'devise/sessions#new'
+    get '/logout' => 'devise/sessions#destroy'  
+  end
   
   root :to => "home#index"
+  
+  resources :users
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

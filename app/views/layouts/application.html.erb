@@ -7,11 +7,86 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
-
-<%= yield %>
-
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="/">Home Daycare</a>
+        <div class="nav-collapse">
+          <ul class="nav">
+            <li><%= link_to "Home",         '/home' %></li>
+            <li><%= link_to "Daily Routine", '#' %></li>
+            <li><%= link_to "Contact",      '/contact' %></li>
+          </ul>
+          <ul class="nav pull-right" style="margin-left:0px">
+            <% if user_signed_in? %>
+              <li><%= link_to "Logout", logout_path %></li>
+            <% else %>
+              <li><%= link_to "Login", login_path %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="main" class="container clear-top">
+    <div class="row">
+      <% if user_signed_in? %>
+      <div class="span2">
+        <div class="well">
+          <ul class="nav nav-list">
+            <li class="nav-header">
+                Settings
+            </li>
+            <li>
+              <%= link_to('Edit Account', edit_user_path(current_user)) %>
+            </li>
+            <% if current_user.has_role? :admin %>
+            <li>
+              <%= link_to('Users', users_path) %>
+            </li>
+            <% end %>
+            <% if current_user.has_role? :admin %>
+            <li class="nav-header">
+                Internal Pages
+            </li>
+            
+            <% end %>
+            <% if current_user.has_role? :teacher %>
+            <li class="nav-header">
+                Teacher Pages
+            </li>
+            <li>
+              <%= link_to "Routine", '#' %>
+            </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <div class="span10">
+      <% else %>
+      <div class="span12">
+      <% end %>
+        <% if !flash[:alert].blank? %>
+          <p class="alert"><%= flash[:alert] %></p>
+        <% end %>
+        <% if !flash[:notice].blank? %>
+          <p class="alert alert-info"><%= flash[:notice] %></p>
+        <% end %>
+        <% if !flash[:success].blank? %>
+          <p class="alert alert-success"><%= flash[:success] %></p>
+        <% end %>
+        
+        <%= yield %>
+      </div>
+    </div>
+    
+    <br /><br />
+    <%= debug(params) if Rails.env.development? %>
+  </div>
 </body>
 </html>
