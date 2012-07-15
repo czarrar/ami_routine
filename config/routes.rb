@@ -1,12 +1,4 @@
 AmiRoutine::Application.routes.draw do
-  get "routines/edit"
-
-  get "routines/index"
-
-  get "routines/new"
-
-  get "routines/show"
-
   get "home/index"
   get "home/contact"
   
@@ -22,7 +14,12 @@ AmiRoutine::Application.routes.draw do
   
   resources :children
   
+  match '/routines/calendar' => "routines#calendar"
+  match '/routines/teacher/:day/:month/:year' => "routines#teacher"
+  match '/routines/teacher_submit' => "routines#teacher_submit"
+  match '/routines/parent/:day/:month/:year' => "routines#parent"
   resources :routines
+  
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

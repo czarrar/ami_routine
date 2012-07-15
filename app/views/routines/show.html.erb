@@ -1,2 +1,35 @@
-<h1>Routines#show</h1>
-<p>Find me in app/views/routines/show.html.erb</p>
+<h1><%= @routine.title %></h1>
+
+<p>
+  <b>Teacher:</b>
+  TODO
+</p>
+
+<p>
+  <b>Child:</b>
+  <%= @routine.child.name %>
+</p>
+
+<p>
+  <b>Starts at:</b>
+  <%= @routine.starts_at %>
+</p>
+
+<p>
+  <b>Ends at:</b>
+  <%= @routine.ends_at %>
+</p>
+
+<p>
+  <b>All day:</b>
+  <%= @routine.all_day %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @routine.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_routine_path(@routine) %> |
+<%= link_to 'Back', routines_path %>

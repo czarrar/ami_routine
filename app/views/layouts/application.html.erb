@@ -2,9 +2,14 @@
 <html>
 <head>
   <title>AmiRoutine</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag    "application-all", :media => "all" %>
+  <%= stylesheet_link_tag    "application-print", :media => "print" %>
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
 </head>
 <body>
   <div class="navbar navbar-fixed-top">
@@ -19,7 +24,7 @@
         <div class="nav-collapse">
           <ul class="nav">
             <li><%= link_to "Home",         '/home' %></li>
-            <li><%= link_to "Daily Routine", '#' %></li>
+            <li><%= link_to "Daily Routine", calendar_path %></li>
             <li><%= link_to "Contact",      '/contact' %></li>
           </ul>
           <ul class="nav pull-right" style="margin-left:0px">
@@ -59,14 +64,6 @@
             </li>
             <li>
               <%= link_to "Routines", routines_path %>
-            </li>
-            <% end %>
-            <% if current_user.has_role? :teacher %>
-            <li class="nav-header">
-                Teacher Pages
-            </li>
-            <li>
-              <%= link_to "Routine", '#' %>
             </li>
             <% end %>
           </ul>

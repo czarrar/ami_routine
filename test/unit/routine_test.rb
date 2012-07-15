@@ -9,12 +9,15 @@ end
 #
 # Table name: routines
 #
-#  id           :integer         not null, primary key
-#  user_id      :integer
-#  child_id     :integer
-#  content      :text
-#  routine_date :date
-#  created_at   :datetime        not null
-#  updated_at   :datetime        not null
+#  id          :integer         not null, primary key
+#  user_id     :integer
+#  child_id    :integer
+#  description :text
+#  created_at  :datetime        not null
+#  updated_at  :datetime        not null
+#  title       :string(255)
+#  starts_at   :datetime
+#  ends_at     :datetime
+#  all_day     :boolean
 #
 

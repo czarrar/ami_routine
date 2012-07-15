@@ -6,8 +6,11 @@
       <th>ID</th>
       <th>Teacher</th>
       <th>Child</th>
-      <th>Date</th>
-      <th>Content</th>
+      <th>Start Date/Time</th>
+      <th>End Date/Time</th>
+      <th>All Day?</th>
+      <th>Title</th>
+      <th>Description</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -16,9 +19,12 @@
       <tr>
         <td><%= routine.id %></td>
         <td>TODO</td>
-        <td><%= routine.child.first_name + " " + routine.child.last_name %></td>
-        <td><%= routine.routine_date %></td>
-        <td><%= routine.content %></td>
+        <td><%= routine.child.name %></td>
+        <td><%= routine.starts_at %></td>
+        <td><%= routine.ends_at %></td>
+        <td><%= routine.all_day %></td>
+        <td><%= routine.title %></td>
+        <td><%= routine.description %></td>
         <td>
           <%= link_to 'Edit', edit_routine_path(routine), :class => "btn btn-mini" %>
           <%= link_to 'Delete', routine, :confirm => "Are you sure?", :method => :delete, :class => 'btn btn-mini btn-danger' %>

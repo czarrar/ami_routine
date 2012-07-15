@@ -1,0 +1,95 @@
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $('#btnAdd').click(function() {
+            var num     = $('.cloned').length - 1;  // how many "duplicatable" input fields we currently have
+            var newNum  = new Number(num + 1);      // the numeric ID of the new input field being added
+            
+            if (newNum == 99) {
+              return;
+            }
+            
+            // create the new element via clone(), and manipulate it's ID using newNum value
+            var newElem = $('#set' + num).clone();
+            var newElem = $(newElem).attr('id', 'set' + newNum);
+            
+            console.log($(newElem));
+            
+            // manipulate the name/id values of the input inside the new element
+            //newElem.children(':first').attr('id', 'name' + newNum).attr('name', 'name' + newNum);
+ 
+            // insert the new element after the last "duplicatable" input field
+            $(newElem).fadeIn('slow').insertAfter('#set' + num);
+            
+            legend = $("#set" + newNum + " legend");
+            legend.text("Entry #" + (newNum+1));
+            
+            label_title = $("#set" + newNum + " label[for='routine_" + num + "_title']");
+            label_title.attr("for", "routine_" + newNum + "_title")
+            
+            label_description = $("#set" + newNum + " label[for='routine_" + num + "_description']");
+            label_description.attr("for", "routine_" + newNum + "_description")
+            
+            title = $("#set" + newNum + " #routine_" + num + "_title");
+            title.attr('id', "routine_" + newNum + "_title")
+            title.attr('name', 'routine[' + newNum + '][title]');
+                        
+            description = $("#set" + newNum + " #routine_" + num + "_description");
+            description.attr('id', "routine_" + newNum + "_description")
+            description.attr('name', 'routine[' + newNum + '][description]');
+            
+            $(newElem).fadeIn('slow');
+        });
+ 
+        $('#btnDel').click(function() {
+            var num = $('.cloned').length - 1; // how many "duplicatable" input fields we currently have
+            
+            if (num == 0) {
+              return;
+            };
+            
+            $('#set' + num).fadeOut('slow', function() { $(this).remove(); });     // remove the last element 
+        });
+    });
+</script>
+
+<h1>Routine<small> on <%= @requested_day.strftime("%B %-d, %Y") %></small></h1>
+
+<%= form_tag({:controller => "routines", :action => "teacher_submit"}, :class => "form-horizontal") %>
+
+  <fieldset>
+    <legend>For all routines</legend>
+    <%= hidden_field_tag "routine_base[all_day]", 1 %>
+    <%= hidden_field_tag "routine_base[starts_at]", @requested_day.to_formatted_s(:db) %>
+    <%= hidden_field_tag "routine_base[ends_at]", (@requested_day + 1.day - 1.minute).to_formatted_s(:db) %>
+    <div class="control-group">
+      <%= label_tag("routine_base[child_id]", "Child", :class => "control-label") %>
+      <div class="controls">
+        <%= select_tag("routine_base[child_id]", options_for_select(@children_for_select)) %>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset id="set0" class="cloned">
+    <legend>Entry #1</legend>
+    
+    <div class="control-group">
+      <%= label_tag("routine[0][title]", "Subject", :class => "control-label") %>
+      <div class="controls">
+        <%= text_field_tag("routine[0][title]") %>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <%= label_tag("routine[0][description]", "Details", :class => "control-label") %>
+      <div class="controls">
+        <%= text_area_tag("routine[0][description]", nil, :rows => 3) %>
+      </div>
+    </div>
+  </fieldset>
+
+
+  <div class="form-actions">
+    <a id="btnAdd">Add</a> | <a id="btnDel">Remove</a> | 
+    <%= submit_tag("Submit Everything") %>
+  </div>
+  

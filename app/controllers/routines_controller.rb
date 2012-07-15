@@ -1,26 +1,97 @@
 class RoutinesController < ApplicationController
   before_filter :authenticate_user!
   
+  ###
+  # Parent/Teacher Interface
+  ###
+  
+  def calendar
+    # can this code be made more succint?
+    @role = current_user.roles.any? { |role| role.name == "teacher" } ? "teacher" : nil
+    @role ||= current_user.roles.any? { |role| role.name == "parent" } ? "parent" : nil
+    # raise exception if @role == nil
+    
+    #current_user.children
+    
+  end
+  
+  def teacher
+    @requested_day = Time.local(params['year'], params['month'], params['day'])
+    @children_for_select = Child.all.collect { |child| [child.name, child.id] }
+  end
+  
+  def teacher_submit
+    errors = params[:routine].collect do |i, routine_hash|
+      routine_hash = routine_hash.merge(params[:routine_base])
+      
+      routine = current_user.routines.new(routine_hash)
+      routine.save
+      
+      routine.errors.messages
+    end          
+    
+    # for now ignore error messages
+  end
+  
+  def parent
+    @requested_day = Time.local(params['year'], params['month'], params['day'])
+    
+    routines = Routine.scoped
+    routines = routines.where("starts_at >= :start AND ends_at < :end", 
+                  { :start => @requested_day, :end => @requested_day + 1.day })
+    routines = routines.order('starts_at ASC')
+    
+    @routines_by_child = routines.group_by { |routine| routine.child.name }
+  end
+  
+  
+  ###
+  # CRUD
+  ###
+  
   def index
-    @routines = Routine.all
-  end
-  
-  def new
-    @routine = current_user.routines.new
-  end
-  
-  def create
-    @routine = current_user.routines.new(params[:routine])
-    if @routine.save
-      flash[:notice] = "Successfully added routine." 
-      redirect_to routines_path
-    else
-      render :action => 'new'
+    @routines = Routine.scoped
+    @routines = @routines.after(params['start']) if params['start']
+    @routines = @routines.before(params['end']) if params['end']
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @routines }
+      format.js  { render :json => @routines }
     end
   end
   
   def show
     @routine = current_user.routines.find(params[:id])
+    
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @routine }
+      format.js { render :json => @routine.to_json }
+    end
+  end
+  
+  def new
+    @routine = current_user.routines.new
+    
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @routine }
+    end
+  end
+  
+  def create
+    @routine = current_user.routines.new(params[:routine])
+    
+    respond_to do |format|
+      if @routine.save
+        format.html { redirect_to(@routine, :notice => 'Routine was successfully created.') }
+        format.xml  { render :xml => @routine, :status => :created, :location => @routine }
+      else
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @routine.errors, :status => :unprocessable_entity }
+      end
+    end
   end
   
   def edit
@@ -29,19 +100,29 @@ class RoutinesController < ApplicationController
   
   def update
     @routine = current_user.routines.find(params[:id])
-    if @routine.update_attributes(params[:routine])
-      flash[:notice] = "Successfully updated routine."
-      redirect_to routines_path
-    else
-      render :action => 'edit'
+    
+    respond_to do |format|
+      if @routine.update_attributes(params[:routine])
+        format.html { redirect_to(@routine, :notice => 'Routine was successfully updated.') }
+        format.xml  { head :ok }
+        format.js { head :ok}
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @routine.errors, :status => :unprocessable_entity }
+        format.js  { render :js => @routine.errors, :status => :unprocessable_entity }
+      end
     end
   end
   
   def destroy
     @routine = current_user.routines.find(params[:id])
-    if @routine.destroy
-      flash[:notice] = "Successfully deleted routine."
-      redirect_to routines_path
-    end
+    
+    respond_to do |format|
+      if @routine.destroy
+        format.html { redirect_to(routines_url, :notice => "Routine was succesfully deleted.") }
+        format.xml  { head :ok }
+      end
+    end    
   end
+  
 end
