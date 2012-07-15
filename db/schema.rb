@@ -11,15 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120714172631) do
+ActiveRecord::Schema.define(:version => 20120715211151) do
 
   create_table "children", :force => true do |t|
-    t.integer  "user_id"
     t.string   "first_name"
     t.string   "last_name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "children_users", :id => false, :force => true do |t|
+    t.integer "child_id"
+    t.integer "user_id"
+  end
+
+  add_index "children_users", ["child_id", "user_id"], :name => "index_children_users_on_child_id_and_user_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"
