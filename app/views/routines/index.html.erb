@@ -11,7 +11,9 @@
       <th>All Day?</th>
       <th>Title</th>
       <th>Description</th>
+      <% if current_user.has_role? :teacher %>
       <th>Actions</th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
@@ -25,13 +27,17 @@
         <td><%= routine.all_day %></td>
         <td><%= routine.title %></td>
         <td><%= routine.description %></td>
+        <% if current_user.has_role? :teacher %>
         <td>
           <%= link_to 'Edit', edit_routine_path(routine), :class => "btn btn-mini" %>
           <%= link_to 'Delete', routine, :confirm => "Are you sure?", :method => :delete, :class => 'btn btn-mini btn-danger' %>
-        </td>  
+        </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= link_to 'New', new_routine_path, :class => 'btn btn-primary' %>
+<% if current_user.has_role? :teacher %>
+  <%= link_to 'New', new_routine_path, :class => 'btn btn-primary' %>
+<% end %>

@@ -30,6 +30,7 @@
   <%= @routine.description %>
 </p>
 
-
-<%= link_to 'Edit', edit_routine_path(@routine) %> |
-<%= link_to 'Back', routines_path %>
+<% if current_user.has_role? :teacher %>
+  <%= link_to 'Edit', edit_routine_path(@routine) %> |
+<% end %>
+<%= link_to 'Back', :back %>

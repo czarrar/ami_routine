@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :admin_only
   
   def index
     @users = User.where("id <> ?", current_user.id)

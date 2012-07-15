@@ -1,6 +1,9 @@
 class RoutinesController < ApplicationController
   before_filter :authenticate_user!
   
+  before_filter :teacher_only, :only => ["teacher", "teacher_submit", "new", 
+                                         "create", "edit", "update", "destroy"]
+  
   ###
   # Parent/Teacher Interface
   ###
@@ -45,6 +48,7 @@ class RoutinesController < ApplicationController
     routines = Routine.scoped
     routines = routines.where("starts_at >= :start AND ends_at < :end", 
                   { :start => @requested_day, :end => @requested_day + 1.day })
+    routines = routines.joins(:child => :user).where("users.id = ?", current_user.id)
     routines = routines.order('starts_at ASC')
     
     @routines_by_child = routines.group_by { |routine| routine.child.name }
@@ -60,6 +64,7 @@ class RoutinesController < ApplicationController
     @routines = @routines.after(params[:start]) if params[:start]
     @routines = @routines.before(params[:end]) if params[:end]
     @routines = @routines.where("child_id = ?", params[:child_id]) if params[:child_id].present?
+    @routines = @routines.joins(:child => :user).where("users.id = ?", current_user.id) if current_user.has_role? :parent and params[:child_id].blank?
     
     respond_to do |format|
       format.html # index.html.erb
@@ -69,7 +74,9 @@ class RoutinesController < ApplicationController
   end
   
   def show
-    @routine = current_user.routines.find(params[:id])
+    @routine = Routine.scoped
+    @routine = @routine.joins(:child => :user).where("users.id = ?", current_user.id) if current_user.has_role? :parent
+    @routine = @routine.find(params[:id])
     
     respond_to do |format|
       format.html # show.html.erb

@@ -15,4 +15,21 @@ class ApplicationController < ActionController::Base
     request.accepts.sort! { |x, y| ajax_request_types.include?(y.to_s) ? 1 : -1 } if request.xhr?
   end
   
+  private
+  
+  def admin_only
+    msg = "Access restricted. Contact the administrator if you think there is an error"
+    redirect_to :back, :alert => msg if !current_user.has_role? :admin
+  end
+  
+  def teacher_only
+    msg = "Access restricted. Contact the administrator if you think there is an error"
+    redirect_to :back, :alert => msg if !current_user.has_role? :teacher
+  end
+  
+  def parent_only
+    msg = "Access restricted. Contact the administrator if you think there is an error"
+    redirect_to :back, :alert => msg if !current_user.has_role? :parent
+  end
+  
 end

@@ -15,7 +15,6 @@ namespace :db do
       :password_confirmation => 'password'
     )
     user.add_role :admin
-    user.add_role :teacher
     
     # Teachers
     2.times do |n|
@@ -26,6 +25,7 @@ namespace :db do
                           :password_confirmation => password)
       user.add_role :teacher
     end
+    teachers = User.joins(:roles).where("roles.name = 'teacher'")
     
     # Parents/Children/Routines
     ## child vars
@@ -63,7 +63,9 @@ namespace :db do
           all_day = true
           title = subject_options.sample()
           description = Faker::Lorem.sentences(sentence_options.sample())
-          child.routines.create!(
+          teacher = teachers.sample()
+          res = teacher.routines.create!(
+            :child_id => child.id, 
             :starts_at => starts_at, 
             :ends_at => ends_at, 
             :all_day => all_day, 
