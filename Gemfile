@@ -7,6 +7,7 @@ gem 'bootstrap-sass', '2.0.4.0'
 gem 'bootswatch-rails', '0.0.12'
 gem 'rolify', '3.1.0'
 gem 'simple_form', '2.0.2'
+gem 'faker', '1.0.1'  # eventually move this to only development
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

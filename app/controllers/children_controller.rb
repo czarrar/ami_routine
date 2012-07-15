@@ -38,7 +38,7 @@ class ChildrenController < ApplicationController
   end
   
   def destroy
-    @child = User.find(params[:id])
+    @child = Child.find(params[:id])
     if @child.destroy
       flash[:notice] = "Successfully deleted child."
       redirect_to children_path

@@ -51,7 +51,13 @@ class Routine < ActiveRecord::Base
   ###
   
   def starts_at=(starts_at)
-    self[:starts_at] = Time.parse(starts_at).utc
+    if starts_at.is_a? String
+      self[:starts_at] = Time.parse(starts_at).utc
+    elsif starts_at.is_a? Time
+      self[:starts_at] = starts_at.utc
+    else
+      raise 'starts_at unrecognized class #{starts_at.class}'
+    end
   end
   
   def starts_at
@@ -63,7 +69,13 @@ class Routine < ActiveRecord::Base
   end
   
   def ends_at=(ends_at)
-    self[:ends_at] = Time.parse(ends_at).utc
+    if ends_at.is_a? String
+      self[:ends_at] = Time.parse(ends_at).utc
+    elsif ends_at.is_a? Time
+      self[:ends_at] = ends_at.utc
+    else
+      raise 'ends_at unrecognized class #{ends_at.class}'
+    end
   end
   
   def ends_at

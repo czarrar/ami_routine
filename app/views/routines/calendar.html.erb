@@ -23,11 +23,16 @@
       
       eventSources: [
         // Daily Routine Stuff
+        <% @child_ids.each_with_index do |child_id, i| %>
         {
           url: '/routines',
-          backgroundColor: '#1F78B4',
-          textColor: 'white',
-        }
+          data: {
+            child_id: "<%= child_id %>"
+          }, 
+          backgroundColor: "<%= @backgroundColors[i] %>", 
+          textColor: "<%= @textColors[i] %>",
+        },
+        <% end %>
       ],
       
       ignoreTimezone: true, 

@@ -11,8 +11,14 @@ class RoutinesController < ApplicationController
     @role ||= current_user.roles.any? { |role| role.name == "parent" } ? "parent" : nil
     # raise exception if @role == nil
     
-    #current_user.children
+    @child_ids = current_user.child_ids
     
+    # from colorbrewer2.org, Set3
+    @backgroundColors = ['#8DD3C7', '#FFFFB3', '#BEBADA', '#FB8072', '#80B1D3', 
+                         '#FDB462', '#B3DE69', '#FCCDE5', '#D9D9D9', '#BC80BD', 
+                         '#CCEBC5', '#FFED6F']
+    @textColors = ['white', 'grey', 'white', 'white', 'white', 'white', 'white', 
+                   'grey', 'black', 'white', 'black', 'grey']
   end
   
   def teacher
@@ -51,8 +57,9 @@ class RoutinesController < ApplicationController
   
   def index
     @routines = Routine.scoped
-    @routines = @routines.after(params['start']) if params['start']
-    @routines = @routines.before(params['end']) if params['end']
+    @routines = @routines.after(params[:start]) if params[:start]
+    @routines = @routines.before(params[:end]) if params[:end]
+    @routines = @routines.where("child_id = ?", params[:child_id]) if params[:child_id].present?
     
     respond_to do |format|
       format.html # index.html.erb
