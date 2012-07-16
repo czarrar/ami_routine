@@ -15,6 +15,7 @@ class RoutinesController < ApplicationController
     # raise exception if @role == nil
     
     @child_ids = current_user.child_ids
+    @child_names = current_user.children.collect { |child| child.first_name }
     
     # from colorbrewer2.org, Set3
     @backgroundColors = ['#8DD3C7', '#FFFFB3', '#BEBADA', '#FB8072', '#80B1D3', 

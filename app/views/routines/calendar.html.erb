@@ -77,6 +77,20 @@
   };
 </script>
 
+<div class="row">
+  <% @child_names.each_with_index do |name, i| %>
+  <div class="span1 event_legend" style="background-color: <%= @backgroundColors[i] %>; color: <%= @textColors[i] %>">
+    <%= name %>
+  </div>
+  <div class="span1">
+  </div>
+  <% end %>
+  <div class="span<%= 12 - (@child_names.count * 2) %>">
+  </div>
+</div>
+
+<hr />
+
 <div id='calendar'>
   
 </div>
