@@ -75,7 +75,7 @@
     <div class="control-group">
       <%= label_tag("routine[0][title]", "Subject", :class => "control-label") %>
       <div class="controls">
-        <%= text_field_tag("routine[0][title]") %>
+        <%= select_tag("routine_base[0][subject_id]", options_for_select(@subjects_for_select)) %>
       </div>
     </div>
     

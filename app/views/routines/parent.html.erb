@@ -7,7 +7,7 @@
 <% @routines_by_child.each do |child_name, routines| %>
 <h2>for <%= child_name %></h2>
   <% routines.each do |routine| %>
-    <h3><%= routine.title %></h3>
+    <h3><%= routine.subject.name %></h3>
     <p><%= routine.description %></p>
   <% end %>
 <% end %>

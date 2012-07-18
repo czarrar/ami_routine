@@ -28,6 +28,7 @@ class RoutinesController < ApplicationController
   def teacher
     @requested_day = Time.local(params['year'], params['month'], params['day'])
     @children_for_select = Child.all.collect { |child| [child.name, child.id] }
+    @subjects_for_select = Subject.all.collect { |subject| [subject.name, subject.id] }
   end
   
   def teacher_submit
