@@ -10,7 +10,7 @@
   <%= f.input :starts_at %>
   <%= f.input :ends_at %>
   <%= f.input :all_day %>
-  <%= f.input :title, :input_html => { :class => 'span8' } %>
+  <%= f.association :subject, :input_html => { :class => 'span8' } %>
   <%= f.input :description, :input_html => { :class => 'span8', :rows => 5 } %>
   
   <div class="form-actions">

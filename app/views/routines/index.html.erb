@@ -9,7 +9,7 @@
       <th>Start Date/Time</th>
       <th>End Date/Time</th>
       <th>All Day?</th>
-      <th>Title</th>
+      <th>Subject</th>
       <th>Description</th>
       <% if current_user.has_role? :teacher %>
       <th>Actions</th>
@@ -25,7 +25,7 @@
         <td><%= routine.starts_at %></td>
         <td><%= routine.ends_at %></td>
         <td><%= routine.all_day %></td>
-        <td><%= routine.title %></td>
+        <td><%= routine.subject.name %></td>
         <td><%= routine.description %></td>
         <% if current_user.has_role? :teacher %>
         <td>

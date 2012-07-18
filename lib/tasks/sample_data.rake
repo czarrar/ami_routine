@@ -4,6 +4,14 @@ namespace :db do
     require 'faker'
     Rake::Task['db:reset'].invoke
     
+    # subject
+    subjects = ["Art", "Cognitive Development", "Language", "Math", 
+                "Motor Skills", "Music", "Science", 
+                "Social & Emotional Development"]
+    subjects.each { |subject| Subject.create!(:name => subject) }
+    subject_ids = Subject.all.collect { |subject| subject.id }
+    
+    
     ###
     # USERS/CHILDREN
     ###
@@ -34,9 +42,7 @@ namespace :db do
     year = Time.now.year
     month = Time.now.month
     day_options = (1..30).to_a
-    subject_options = ["Art", "Cognitive Development", "Language", "Math", 
-                       "Motor Skills", "Music", "Science", 
-                       "Social & Emotional Development"]
+    
     sentence_options = (1..5).to_a
     6.times do |n|
       email = "parent-#{n+1}@gmail.com"
@@ -61,7 +67,6 @@ namespace :db do
           starts_at = Time.local(year, month, day_options.sample())
           ends_at = starts_at + 1.day - 1.minute
           all_day = true
-          title = subject_options.sample()
           description = Faker::Lorem.sentences(sentence_options.sample())
           teacher = teachers.sample()
           res = teacher.routines.create!(
@@ -69,7 +74,7 @@ namespace :db do
             :starts_at => starts_at, 
             :ends_at => ends_at, 
             :all_day => all_day, 
-            :title => title, 
+            :subject_id => subject_ids.sample(), 
             :description => description
           )
         end

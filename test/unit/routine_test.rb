@@ -15,9 +15,9 @@ end
 #  description :text
 #  created_at  :datetime        not null
 #  updated_at  :datetime        not null
-#  title       :string(255)
 #  starts_at   :datetime
 #  ends_at     :datetime
 #  all_day     :boolean
+#  subject_id  :integer
 #
 

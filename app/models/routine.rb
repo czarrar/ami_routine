@@ -8,22 +8,33 @@
 #  description :text
 #  created_at  :datetime        not null
 #  updated_at  :datetime        not null
-#  title       :string(255)
 #  starts_at   :datetime
 #  ends_at     :datetime
 #  all_day     :boolean
+#  subject_id  :integer
 #
 
 class Routine < ActiveRecord::Base
-  attr_accessible :child_id, :title, :starts_at, :ends_at, :all_day, :description
+  attr_accessible :child_id, :subject_id, :starts_at, :ends_at, :all_day, :description
+  
+  before_save :default_values
   
   belongs_to :user
   belongs_to :child
+  belongs_to :subject
   
   scope :before, lambda {|end_time| {:conditions => ["ends_at < ?", Routine.format_date(end_time)] }}
   scope :after, lambda {|start_time| {:conditions => ["starts_at > ?", Routine.format_date(start_time)] }}
+  scope :for_parent, lambda {|user| joins(:child => :user).where("users.id = ?", user.id) }
   
-  # todo: add validations
+  validates :user_id, :presence => true
+  validates :child_id, :presence => true
+  validates :starts_at, :presence => true
+  validates :subject_id, :presence => true
+  
+  def default_values
+    self.all_day ||= false
+  end
   
   # need to override the json view to return what full_calendar is expecting.
   # http://arshaw.com/fullcalendar/docs/event_data/Event_Object/

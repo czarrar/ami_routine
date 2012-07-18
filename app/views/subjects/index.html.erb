@@ -1,0 +1,25 @@
+<h1>Subjects</h1>
+
+<table class="table">
+  <thead>
+	  <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @subjects.each do |subject| %>
+      <tr>
+        <td><%= subject.id %></td>
+        <td><%= subject.name %></td>
+        <td>
+          <%= link_to 'Edit', edit_subject_path(subject), :class => "btn btn-mini" %>
+          <%= link_to 'Delete', subject, :confirm => "Are you sure?", :method => :delete, :class => 'btn btn-mini btn-danger' %>
+        </td>  
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New', new_subject_path, :class => 'btn btn-primary' %>

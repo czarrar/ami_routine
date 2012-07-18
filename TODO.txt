@@ -1,0 +1,17 @@
+- subject drop-down
+  - create subjects table
+  - link this to the routine
+- teacher select multiple children
+- email (select parents and select days)
+  - need to have publish option
+- add teacher/parent names
+
+- way to send announcement to parents (like day off)
+- put time for each entry
+- smugmug?
+
+
+Current
+- added a scope for_parent
+- creates subjects table
+- remove title column; add subject_id column

@@ -14,6 +14,8 @@ AmiRoutine::Application.routes.draw do
   
   resources :children
   
+  resources :subjects
+  
   match '/routines/calendar' => "routines#calendar", :as => "calendar"
   match '/routines/teacher/:day/:month/:year' => "routines#teacher"
   match '/routines/teacher_submit' => "routines#teacher_submit"
