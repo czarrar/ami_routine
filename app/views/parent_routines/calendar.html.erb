@@ -35,6 +35,18 @@
         <% end %>
       ],
       
+      eventRender: function(event, element) {
+          element.qtip({
+              content: {
+                title: event.title, 
+                text: event.description
+              }, 
+              style: {
+                classes: 'ui-tooltip-bootstrap ui-tooltip-shadow ui-tooltip-rounded'
+              }
+          });
+      }, 
+      
       ignoreTimezone: true, 
 //      timeFormat: 'h:mm t{ - h:mm t} ',
       dragOpacity: "0.5",

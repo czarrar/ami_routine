@@ -55,6 +55,18 @@
         // would like a lightbox here.
       },
       
+      eventRender: function(event, element) {
+          element.qtip({
+              content: {
+                title: event.title, 
+                text: event.description
+              }, 
+              style: {
+                classes: 'ui-tooltip-bootstrap ui-tooltip-shadow ui-tooltip-rounded'
+              }
+          });
+      }, 
+      
       dayClick: function(date, allDay, jsEvent, view) {
         $(this).css('background-color', '#FBB4AE');
         url = "/teacher_routines/day/" + date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
