@@ -51,7 +51,7 @@ class TeacherRoutinesController < ApplicationController
     @requested_day = Time.parse(params[:date])
     @routines = Routine.scoped
     @routines = @routines.range_for_day(@requested_day)
-    @routines = @routines.joins(:subject).order("subjects.name")
+    @routines = @routines.joins(:subject).order("published ASC, subjects.name ASC")
   end
   
   def update
@@ -88,7 +88,7 @@ class TeacherRoutinesController < ApplicationController
     @routines = @routines.after(params[:start]) if params[:start]
     @routines = @routines.before(params[:end]) if params[:end]
     @routines = @routines.range_for_day(Time.parse(params[:date])) if params[:date]
-    @routines = @routines.joins(:subject).order("subjects.name")
+    @routines = @routines.joins(:subject).order("published ASC, subjects.name ASC")
     
     respond_to do |format|
       format.html # index.html.erb

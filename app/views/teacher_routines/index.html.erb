@@ -18,7 +18,11 @@
 <hr />
 <% end %>
 <p>
-  <strong><%= routine.subject.name %></strong><br />
+  <strong><%= routine.subject.name %></strong>
+  <% if routine.published %>
+    (published)
+  <% end %>
+  <br />
   <em><%= routine.children.collect { |child| child.name }.join(", ") %></em><br />
   <%= routine.description %>
 </p>

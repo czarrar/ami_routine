@@ -76,10 +76,19 @@
     <div class="control-group<%= ' error' if routine.errors.messages[:child_ids] %>">
       <%= label_tag("routine[#{i}][child_ids]", "Children", :class => "control-label") %>
       <div class="controls">
+        <% children_for_select.each do |elem| %>
+          <label class="checkbox">
+            <%= check_box_tag("routine[#{i}][child_ids][]", elem[1], routine.child_ids.include?(elem[1])) %>
+            <%= elem[0] %>
+          </label>
+        <% end %>
+        
+        <!--
         <%= select_tag("routine[#{i}][child_ids]", options_for_select(children_for_select, routine.child_ids), :multiple => true, :class => "span4") %>
         <% if routine.errors.messages[:child_ids] %>
           <span class="help-inline"><%= routine.errors.messages[:child_ids].join(", ") %></span>
         <% end %>
+        -->
       </div>
     </div>
     
@@ -99,6 +108,16 @@
         <%= text_area_tag("routine[#{i}][description]", routine.description, :rows => 6, :class => "span4") %>
         <% if routine.errors.messages[:description] %>
           <span class="help-inline"><%= routine.errors.messages[:description].join(", ") %></span>
+        <% end %>
+      </div>
+    </div>
+    
+    <div class="control-group<%= ' error' if routine.errors.messages[:published] %>">
+      <%= label_tag("routine[#{i}][published]", "Publish", :class => "control-label") %>
+      <div class="controls">
+        <%= check_box_tag("routine[#{i}][published]", 1, routine.published) %>
+        <% if routine.errors.messages[:published] %>
+          <span class="help-inline"><%= routine.errors.messages[:published].join(", ") %></span>
         <% end %>
       </div>
     </div>

@@ -1,4 +1,3 @@
-- teacher select multiple children
 - add publish option to routine
 - email (select parents and select days)
   - need to have publish option
@@ -9,6 +8,8 @@
 - smugmug?
 
 DONE
-- allow many children to be associated with a routine
-  - created association table children_routines
-  - removed child_id column in routines
+- add publish field to routine
+- add it to forms
+- sort teachers pages by published status
+- restrict parent calendar to only show published items
+- restrict parent show to only show published items

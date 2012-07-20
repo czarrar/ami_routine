@@ -23,6 +23,7 @@ class ParentRoutinesController < ApplicationController
       routines = child.routines.scoped
       routines = routines.range_for_day(@requested_day) if params[:date]
       routines = routines.order('starts_at DESC')
+      routines = routines.published?
       [child.name, routines]
     end
     @routines_by_child = Hash[ *@routines_by_child.flatten(1) ]

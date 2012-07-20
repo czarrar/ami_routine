@@ -17,6 +17,7 @@ namespace :db do
     ###
     
     # Admin
+    puts 'Admin'
     user = User.create!(
       :email => 'admin@gmail.com', 
       :password => 'password', 
@@ -25,6 +26,7 @@ namespace :db do
     user.add_role :admin
     
     # Teachers
+    puts 'Teachers'
     2.times do |n|
       email = "teacher-#{n+1}@gmail.com"
       password  = "password"
@@ -35,34 +37,46 @@ namespace :db do
     end
     teachers = User.joins(:roles).where("roles.name = 'teacher'")
     
-    # Parents/Children/Routines
-    nc_options = [1,2,3]  # nc = num children
+    # Parents
+    puts 'Parents'
     6.times do |n|
       email = "parent-#{n+1}@gmail.com"
       password  = "password"
       parent = User.create!(:email => email,
                           :password => password,
                           :password_confirmation => password)
-      parent.add_role :parent
+      parent.add_role :parent      
+    end
+    parents = User.joins(:roles).where("roles.name = 'parent'")
+    
+    # Children
+    puts 'Children'
+    nc_options = [1,2,3]
+    3.times do |i|
+      ii = i*2
+      ie = ii + 1
+      parent_ids = parents[ii..ie].collect { |parent| parent.id }
       
-      # Children/Routines
       nc = nc_options.sample()
       nc.times do |nn|
         first_name = Faker::Name.first_name
         last_name = Faker::Name.last_name
-        child = parent.children.create!(
+        child = Child.create!(
           :first_name => first_name, 
-          :last_name => last_name
-        )        
+          :last_name => last_name,
+          :user_ids => parent_ids
+        )
       end
     end
     child_ids = Child.all.collect { |child| child.id }
     
     # Routines
+    puts 'Routines'
     year = Time.now.year
     month = Time.now.month
     day_options = (1..30).to_a
     sentence_options = (1..5).to_a
+    published_options = [true, false]
     150.times do |n|
       starts_at = Time.local(year, month, day_options.sample())
       ends_at = starts_at + 1.day - 1.minute
@@ -75,7 +89,8 @@ namespace :db do
         :ends_at => ends_at, 
         :all_day => all_day, 
         :subject_id => subject_ids.sample(), 
-        :description => description
+        :description => description,
+        :published => published_options.sample()
       )
     end
     

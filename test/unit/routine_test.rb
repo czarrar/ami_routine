@@ -11,7 +11,6 @@ end
 #
 #  id          :integer         not null, primary key
 #  user_id     :integer
-#  child_id    :integer
 #  description :text
 #  created_at  :datetime        not null
 #  updated_at  :datetime        not null
@@ -19,5 +18,6 @@ end
 #  ends_at     :datetime
 #  all_day     :boolean
 #  subject_id  :integer
+#  published   :boolean
 #
 

@@ -14,6 +14,7 @@ class RoutinesController < ApplicationController
     @routines = @routines.joins(:subject).where("subjects.id = ?", params[:subject_id]) if params[:subject_id].present?
     @routines = @routines.joins(:children).where("children.id = ?", params[:child_id]) if params[:child_id].present?
     @routines = @routines.for_parent(current_user) if current_user.has_role? :parent and params[:child_id].blank?
+    @routines = @routines.published? if current_user.has_role? :parent
     
     respond_to do |format|
       format.html # index.html.erb
@@ -24,7 +25,10 @@ class RoutinesController < ApplicationController
   
   def show
     @routine = Routine.scoped
-    @routine = @routine.for_parent(current_user) if current_user.has_role? :parent
+    if current_user.has_role? :parent
+      @routine = @routine.for_parent(current_user)
+      @routine = @routine.published?
+    end
     @routine = @routine.find(params[:id])
     
     respond_to do |format|

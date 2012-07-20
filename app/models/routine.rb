@@ -4,7 +4,6 @@
 #
 #  id          :integer         not null, primary key
 #  user_id     :integer
-#  child_id    :integer
 #  description :text
 #  created_at  :datetime        not null
 #  updated_at  :datetime        not null
@@ -12,10 +11,11 @@
 #  ends_at     :datetime
 #  all_day     :boolean
 #  subject_id  :integer
+#  published   :boolean
 #
 
 class Routine < ActiveRecord::Base
-  attr_accessible :child_ids, :subject_id, :starts_at, :ends_at, :all_day, :description
+  attr_accessible :child_ids, :subject_id, :starts_at, :ends_at, :all_day, :description, :published
   
   before_save :default_values
   
@@ -28,6 +28,7 @@ class Routine < ActiveRecord::Base
   scope :for_parent, lambda {|user| joins(:children => :user).where("users.id = ?", user.id) }
   scope :range_for_day, lambda {|day| {:conditions => ["starts_at >= :start AND ends_at < :end", 
                                                       { :start => day, :end => day + 1.day }] }}
+  scope :published?, where(:published => true)
   
   validates :user_id, :presence => true
   validates :starts_at, :presence => true
@@ -36,6 +37,8 @@ class Routine < ActiveRecord::Base
   
   def default_values
     self.all_day ||= false
+    self.published ||= false
+    return true
   end
   
   # need to override the json view to return what full_calendar is expecting.

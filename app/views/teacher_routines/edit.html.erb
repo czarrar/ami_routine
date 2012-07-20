@@ -50,6 +50,16 @@
         <% end %>
       </div>
     </div>
+    
+    <div class="control-group<%= ' error' if routine.errors.messages[:published] %>">
+      <%= label_tag("routine[#{i}][published]", "Publish", :class => "control-label") %>
+      <div class="controls">
+        <%= check_box_tag("routine[#{i}][published]", 1, routine.published) %>
+        <% if routine.errors.messages[:published] %>
+          <span class="help-inline"><%= routine.errors.messages[:published].join(", ") %></span>
+        <% end %>
+      </div>
+    </div>
   </fieldset>
 <% end %>
 
