@@ -1,6 +1,7 @@
 AmiRoutine::Application.routes.draw do
   get "home/index"
   get "home/contact"
+  match '/home' => "home#index"
   
   devise_for :users, :path_prefix => 'd'
   devise_scope :user do
@@ -15,6 +16,16 @@ AmiRoutine::Application.routes.draw do
   resources :children
   
   resources :subjects
+  
+  match '/teacher_routines/calendar' => "teacher_routines#calendar", :as => "teacher_calendar"
+  match '/teacher_routines/day/:date' => "teacher_routines#index"
+  match '/teacher_routines/new' => "teacher_routines#new"
+  match '/teacher_routines/create' => "teacher_routines#create"
+  match '/teacher_routines/edit' => "teacher_routines#edit"
+  match '/teacher_routines/update' => "teacher_routines#update"
+  
+  match '/parent_routines/calendar' => "parent_routines#calendar", :as => "parent_calendar"
+  match '/parent_routines/day/:date' => "parent_routines#index"
   
   match '/routines/calendar' => "routines#calendar", :as => "calendar"
   match '/routines/teacher/:day/:month/:year' => "routines#teacher"

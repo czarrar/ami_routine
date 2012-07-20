@@ -15,22 +15,24 @@
 #
 
 class Routine < ActiveRecord::Base
-  attr_accessible :child_id, :subject_id, :starts_at, :ends_at, :all_day, :description
+  attr_accessible :child_ids, :subject_id, :starts_at, :ends_at, :all_day, :description
   
   before_save :default_values
   
   belongs_to :user
-  belongs_to :child
   belongs_to :subject
+  has_and_belongs_to_many :children
   
   scope :before, lambda {|end_time| {:conditions => ["ends_at < ?", Routine.format_date(end_time)] }}
   scope :after, lambda {|start_time| {:conditions => ["starts_at > ?", Routine.format_date(start_time)] }}
-  scope :for_parent, lambda {|user| joins(:child => :user).where("users.id = ?", user.id) }
+  scope :for_parent, lambda {|user| joins(:children => :user).where("users.id = ?", user.id) }
+  scope :range_for_day, lambda {|day| {:conditions => ["starts_at >= :start AND ends_at < :end", 
+                                                      { :start => day, :end => day + 1.day }] }}
   
   validates :user_id, :presence => true
-  validates :child_id, :presence => true
   validates :starts_at, :presence => true
   validates :subject_id, :presence => true
+  validates :child_ids, :presence => true
   
   def default_values
     self.all_day ||= false
@@ -72,7 +74,7 @@ class Routine < ActiveRecord::Base
   end
   
   def starts_at
-    Time.at(self[:starts_at])
+    Time.at(self[:starts_at]) if !self[:starts_at].nil?
   end
   
   def utc_starts_at
@@ -90,7 +92,7 @@ class Routine < ActiveRecord::Base
   end
   
   def ends_at
-    Time.at(self[:ends_at])
+    Time.at(self[:ends_at]) if !self[:ends_at].nil?
   end
   
   def utc_starts_at

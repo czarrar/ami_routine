@@ -1,0 +1,31 @@
+<h1>
+  Routines
+  <% if params[:date] %>
+  <small>on <%= Time.parse(params[:date]).strftime("%B %-d, %Y") %></small>
+    <div class="pull-right">
+      <%= link_to 'New', teacher_routines_new_path(:date => params[:date]), :class => 'btn btn-primary' %>
+      <% if @routines.count > 0 %>
+      <%= link_to 'Edit All', teacher_routines_edit_path(:date => params[:date]), :class => 'btn' %>
+      <% end %>
+    </div>
+  <% else %>
+    <%= link_to 'New', new_routine_path, :class => 'btn btn-primary pull-right' %>
+  <% end %>
+</h1>
+<br />
+<% @routines.each_with_index do |routine, i| %>
+<% if i > 0 %>
+<hr />
+<% end %>
+<p>
+  <strong><%= routine.subject.name %></strong><br />
+  <em><%= routine.children.collect { |child| child.name }.join(", ") %></em><br />
+  <%= routine.description %>
+</p>
+<p>
+  <%= link_to 'Edit', edit_routine_path(routine), :class => "btn btn-mini" %>
+  <%= link_to 'Delete', routine, :confirm => "Are you sure?", :method => :delete, :class => 'btn btn-mini btn-danger' %>
+</p>
+<% end %>
+
+

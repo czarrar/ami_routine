@@ -6,12 +6,12 @@
     </div>
   <% end %>
 
-  <%= f.association :child, :label_method => :name %>
   <%= f.input :starts_at %>
   <%= f.input :ends_at %>
   <%= f.input :all_day %>
-  <%= f.association :subject, :input_html => { :class => 'span8' } %>
-  <%= f.input :description, :input_html => { :class => 'span8', :rows => 5 } %>
+  <%= f.association :children, :label_method => :name %>
+  <%= f.association :subject %>
+  <%= f.input :description, :input_html => { :class => 'span6', :rows => 5 } %>
   
   <div class="form-actions">
     <%= f.button :submit %>

@@ -1,0 +1,28 @@
+<div class="page-header">
+  <h1>
+    Routine
+    <% if params[:date] %>  
+      <small> on <%= @requested_day.strftime("%B %-d, %Y") %></small>
+    <% end %>
+    <div class="pull-right">
+      <%= link_to 'Back', :back, :class => "btn" %>
+    </div>
+  </h1>
+</div>
+
+<% if @routines_by_child.empty? %>
+  <p><strong>Nothing for this day</strong></p>
+<% end %>
+
+<div class="parent-routine">
+  <% @routines_by_child.each do |child_name, routines| %>
+  <h2>for <%= child_name %></h2>
+    <div class="content">
+      <% routines.each do |routine| %>
+        <h3><%= routine.subject.name %></h3>
+        <p><%= routine.description %></p>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+

@@ -23,11 +23,11 @@
       
       eventSources: [
         // Daily Routine Stuff
-        <% @child_ids.each_with_index do |child_id, i| %>
+        <% @subject_ids.each_with_index do |subject_id, i| %>
         {
           url: '/routines',
           data: {
-            child_id: "<%= child_id %>"
+            subject_id: "<%= subject_id %>"
           }, 
           backgroundColor: "<%= @backgroundColors[i] %>", 
           textColor: "<%= @textColors[i] %>",
@@ -57,7 +57,7 @@
       
       dayClick: function(date, allDay, jsEvent, view) {
         $(this).css('background-color', '#FBB4AE');
-        url = "/routines/<%= @role %>/" + date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
+        url = "/teacher_routines/day/" + date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
         $(location).attr('href', url);
       }
     });
@@ -66,30 +66,16 @@
   function updateRoutine(the_routine) {
       $.update(
         "/routines/" + the_routine.id,
-        { routine: { title: the_routine.title,
-                     starts_at: "" + the_routine.start,
-                     ends_at: "" + the_routine.end,
-                     description: the_routine.description
+        { routine: { starts_at: "" + the_routine.start,
+                     ends_at: "" + the_routine.end
                    }
         },
-        function (response) { alert('successfully updated task.'); }
+        function (response) { alert('successfully updated task.'); }, 
+        function (response) { alert('error'); }
       );
   };
+
 </script>
-
-<div class="row">
-  <% @child_names.each_with_index do |name, i| %>
-  <div class="span1 event_legend" style="background-color: <%= @backgroundColors[i] %>; color: <%= @textColors[i] %>">
-    <%= name %>
-  </div>
-  <div class="span1">
-  </div>
-  <% end %>
-  <div class="span<%= 12 - (@child_names.count * 2) %>">
-  </div>
-</div>
-
-<hr />
 
 <div id='calendar'>
   

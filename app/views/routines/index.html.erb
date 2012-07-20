@@ -5,7 +5,7 @@
 	  <tr>
       <th>ID</th>
       <th>Teacher</th>
-      <th>Child</th>
+      <th>Children</th>
       <th>Start Date/Time</th>
       <th>End Date/Time</th>
       <th>All Day?</th>
@@ -21,7 +21,7 @@
       <tr>
         <td><%= routine.id %></td>
         <td>TODO</td>
-        <td><%= routine.child.name %></td>
+        <td><%= routine.children.collect { |child| child.name }.join(", ") %></td>
         <td><%= routine.starts_at %></td>
         <td><%= routine.ends_at %></td>
         <td><%= routine.all_day %></td>

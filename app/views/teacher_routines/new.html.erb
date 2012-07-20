@@ -21,7 +21,10 @@
             $(newElem).fadeIn('slow').insertAfter('#set' + num);
             
             legend = $("#set" + newNum + " legend");
-            legend.text("Entry #" + (newNum+1));
+            legend.text("New Entry #" + (newNum+1));
+
+            label_child = $("#set" + newNum + " label[for='routine_" + num + "_child_ids']");
+            label_child.attr("for", "routine_" + newNum + "_child_ids")
             
             label_title = $("#set" + newNum + " label[for='routine_" + num + "_title']");
             label_title.attr("for", "routine_" + newNum + "_title")
@@ -29,6 +32,10 @@
             label_description = $("#set" + newNum + " label[for='routine_" + num + "_description']");
             label_description.attr("for", "routine_" + newNum + "_description")
             
+            child = $("#set" + newNum + " #routine_" + num + "_child_ids");
+            child.attr('id', "routine_" + newNum + "_child_ids")
+            child.attr('name', 'routine[' + newNum + '][child_ids]');
+
             title = $("#set" + newNum + " #routine_" + num + "_title");
             title.attr('id', "routine_" + newNum + "_title")
             title.attr('name', 'routine[' + newNum + '][title]');
@@ -54,42 +61,53 @@
 
 <h1>Routine<small> on <%= @requested_day.strftime("%B %-d, %Y") %></small></h1>
 
-<%= form_tag({:controller => "routines", :action => "teacher_submit"}, :class => "form-horizontal") %>
+<%= form_tag({:controller => "teacher_routines", :action => "create"}, :class => "form-horizontal") %>
 
   <fieldset>
-    <legend>For all routines</legend>
     <%= hidden_field_tag "routine_base[all_day]", 1 %>
     <%= hidden_field_tag "routine_base[starts_at]", @requested_day.to_formatted_s(:db) %>
     <%= hidden_field_tag "routine_base[ends_at]", (@requested_day + 1.day - 1.minute).to_formatted_s(:db) %>
-    <div class="control-group">
-      <%= label_tag("routine_base[child_id]", "Child", :class => "control-label") %>
-      <div class="controls">
-        <%= select_tag("routine_base[child_id]", options_for_select(@children_for_select)) %>
-      </div>
-    </div>
   </fieldset>
 
-  <fieldset id="set0" class="cloned">
-    <legend>Entry #1</legend>
+<% @routines.each_with_index do |routine, i| %>
+  <fieldset id="set<%= i %>" class="cloned">
+    <legend>New Entry #<%= i+1 %></legend>
     
-    <div class="control-group">
-      <%= label_tag("routine[0][title]", "Subject", :class => "control-label") %>
+    <div class="control-group<%= ' error' if routine.errors.messages[:child_ids] %>">
+      <%= label_tag("routine[#{i}][child_ids]", "Children", :class => "control-label") %>
       <div class="controls">
-        <%= select_tag("routine_base[0][subject_id]", options_for_select(@subjects_for_select)) %>
+        <%= select_tag("routine[#{i}][child_ids]", options_for_select(children_for_select, routine.child_ids), :multiple => true, :class => "span4") %>
+        <% if routine.errors.messages[:child_ids] %>
+          <span class="help-inline"><%= routine.errors.messages[:child_ids].join(", ") %></span>
+        <% end %>
       </div>
     </div>
     
-    <div class="control-group">
-      <%= label_tag("routine[0][description]", "Details", :class => "control-label") %>
+    <div class="control-group<%= ' error' if routine.errors.messages[:subject_id] %>">
+      <%= label_tag("routine[#{i}][subject_id]", "Subject", :class => "control-label") %>
       <div class="controls">
-        <%= text_area_tag("routine[0][description]", nil, :rows => 3) %>
+        <%= select_tag("routine[#{i}][subject_id]", options_for_select(subjects_for_select, routine.subject_id), :class => "span4") %>
+        <% if routine.errors.messages[:subject_id] %>
+          <span class="help-inline"><%= routine.errors.messages[:subject_id].join(", ") %></span>
+        <% end %>
+      </div>
+    </div>
+    
+    <div class="control-group<%= ' error' if routine.errors.messages[:description] %>">
+      <%= label_tag("routine[#{i}][description]", "Details", :class => "control-label") %>
+      <div class="controls">
+        <%= text_area_tag("routine[#{i}][description]", routine.description, :rows => 6, :class => "span4") %>
+        <% if routine.errors.messages[:description] %>
+          <span class="help-inline"><%= routine.errors.messages[:description].join(", ") %></span>
+        <% end %>
       </div>
     </div>
   </fieldset>
-
+<% end %>
 
   <div class="form-actions">
-    <a id="btnAdd">Add</a> | <a id="btnDel">Remove</a> | 
-    <%= submit_tag("Submit Everything") %>
+    <a id="btnAdd" class="btn btn-success">Add</a> <a id="btnDel" class="btn btn-warning">Remove</a>
+    |
+    <%= submit_tag("Submit Everything", :class => "btn btn-primary") %> <%= link_to "Back", day_teacher_routines_path(@requested_day), :class => "btn btn-danger" %>
   </div>
-  
+

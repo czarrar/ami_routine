@@ -13,7 +13,11 @@ class Child < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :user_ids
   
   has_and_belongs_to_many :user
-  has_many :routines
+  has_and_belongs_to_many :routines
+  
+  validates :first_name, :presence => true
+  validates :last_name, :presence => true
+  validates :user_ids, :presence => true
   
   def name
     "#{first_name} #{last_name}"

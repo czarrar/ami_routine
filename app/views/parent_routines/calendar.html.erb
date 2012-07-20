@@ -1,0 +1,69 @@
+<script type='text/javascript'>
+  $(document).ready(function() {
+    
+    $('#calendar').fullCalendar({
+      editable: false,
+      
+  		header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      
+      defaultView: 'month',
+      height: 500,
+      slotMinutes: 15,
+      
+      loading: function(bool){
+          if (bool) 
+              $('#loading').show();
+          else 
+              $('#loading').hide();
+      },
+      
+      eventSources: [
+        // Daily Routine Stuff
+        <% @child_ids.each_with_index do |child_id, i| %>
+        {
+          url: '/routines',
+          data: {
+            child_id: "<%= child_id %>"
+          }, 
+          backgroundColor: "<%= @backgroundColors[i] %>", 
+          textColor: "<%= @textColors[i] %>",
+        },
+        <% end %>
+      ],
+      
+      ignoreTimezone: true, 
+//      timeFormat: 'h:mm t{ - h:mm t} ',
+      dragOpacity: "0.5",
+            
+      dayClick: function(date, allDay, jsEvent, view) {
+        $(this).css('background-color', '#FBB4AE');
+        url = "/parent_routines/day/" + date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
+        $(location).attr('href', url);
+      }
+    });
+  });
+</script>
+
+<div class="row">
+  <% @child_names.each_with_index do |name, i| %>
+  <div class="span1 event_legend" style="background-color: <%= @backgroundColors[i] %>; color: <%= @textColors[i] %>">
+    <%= name %>
+  </div>
+  <div class="span1">
+  </div>
+  <% end %>
+  <div class="span<%= 12 - (@child_names.count * 2) %>">
+  </div>
+</div>
+
+<hr />
+
+<div id='calendar'>
+  
+</div>
+
+

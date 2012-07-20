@@ -1,7 +1,5 @@
-- subject drop-down
-  - create subjects table
-  - link this to the routine
 - teacher select multiple children
+- add publish option to routine
 - email (select parents and select days)
   - need to have publish option
 - add teacher/parent names
@@ -10,8 +8,7 @@
 - put time for each entry
 - smugmug?
 
-
-Current
-- added a scope for_parent
-- creates subjects table
-- remove title column; add subject_id column
+DONE
+- allow many children to be associated with a routine
+  - created association table children_routines
+  - removed child_id column in routines

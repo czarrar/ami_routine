@@ -1,4 +1,4 @@
-<h1><%= @routine.title %></h1>
+<h1><%= @routine.subject.name %></h1>
 
 <p>
   <b>Teacher:</b>
@@ -6,8 +6,8 @@
 </p>
 
 <p>
-  <b>Child:</b>
-  <%= @routine.child.name %>
+  <b>Children:</b>
+  <%= @routine.children.collect { |child| child.name }.join(", ") %>
 </p>
 
 <p>

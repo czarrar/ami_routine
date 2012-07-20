@@ -1,0 +1,15 @@
+// Place all the styles related to the ParentRoutines controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.parent-routine {
+  h2 {
+    margin-top: 25px;
+    margin-bottom: 10px;
+  }
+  
+  .content {
+    padding-left: 15px;
+    border-left: 1px solid grey;
+  }
+}
