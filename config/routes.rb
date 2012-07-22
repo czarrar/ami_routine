@@ -23,6 +23,7 @@ AmiRoutine::Application.routes.draw do
   match '/teacher_routines/create' => "teacher_routines#create"
   match '/teacher_routines/edit' => "teacher_routines#edit"
   match '/teacher_routines/update' => "teacher_routines#update"
+  match '/teacher_routines/email' => "teacher_routines#email"
   
   match '/parent_routines/calendar' => "parent_routines#calendar", :as => "parent_calendar"
   match '/parent_routines/day/:date' => "parent_routines#index"

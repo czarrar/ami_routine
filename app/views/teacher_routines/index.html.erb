@@ -5,7 +5,8 @@
     <div class="pull-right">
       <%= link_to 'New', teacher_routines_new_path(:date => params[:date]), :class => 'btn btn-primary' %>
       <% if @routines.count > 0 %>
-      <%= link_to 'Edit All', teacher_routines_edit_path(:date => params[:date]), :class => 'btn' %>
+      <%= link_to 'Edit All', teacher_routines_edit_path(:date => params[:date]), :class => 'btn btn-info' %>
+      <%= link_to 'Email', teacher_routines_email_path(:starts_at => params[:date], :ends_at => params[:date]), :class => 'btn' %>
       <% end %>
     </div>
   <% else %>

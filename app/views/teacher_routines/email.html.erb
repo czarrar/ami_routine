@@ -1,0 +1,51 @@
+<script type='text/javascript'>
+$(function (){
+  $('#email_starts_at').datepicker();
+  $('#email_ends_at').datepicker();
+});
+</script>
+
+<%= simple_form_for(@email, 
+    :url => url_for(:action => 'email', :controller => 'teacher_routines'), 
+    :html => {:class => 'form-horizontal' }) do |f| %>
+
+<fieldset>
+  <legend>Email Options</legend>
+
+
+  <% if notification = f.error_notification %>
+    <div class="alert alert-error fade in">
+      <a class="close" data-dismiss="alert" href="#">&times;</a>
+      <%= notification %>
+    </div>
+  <% end %>
+
+  <%= f.input :starts_at, :input_html => { :class => 'span2' } %>
+  <%= f.input :ends_at, :input_html => { :class => 'span2' } %>
+  
+  <div class="control-group<%= ' error' if @email.errors.messages[:parent_ids] %>">
+    <%= label_tag("email[parent_ids]", "Parents", :class => "control-label") %>
+    <div class="controls">
+      <% @parents_and_children.each do |hash| %>
+        <label class="checkbox">
+          <%= check_box_tag("email[parent_ids][]", hash[:id], @email.parent_ids.include?(hash[:id])) %>
+          <%= hash[:name] %>
+          <br />
+          <em>(Children: <%= hash[:children].join(", ") %>)</em>
+        </label>
+      <% end %>
+      <% if @email.errors.messages[:parent_ids] %>
+        <span class="help-inline"><%= @email.errors.messages[:parent_ids].join(", ") %></span>
+      <% end %>
+    </div>
+  </div>
+  
+  <div class="form-actions">
+    <%= f.submit "Email" , :class => "btn btn-primary" %> 
+    <%= link_to "Back", :back, :class => "btn btn-danger" %>
+  </div>
+
+</fieldset>
+
+<% end %>  
+

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <% @routines_by_child_by_date.each do |child_name, routines_by_date| %>
+      <h1><%= child_name %></h1>
+      <% routines_by_date.each do |date, routines| %>
+        <h2><%= date %></h2>
+        <% routines.each do |routine| %>
+          <h3><%= routine.subject.name %></h3>
+          <p><%= routine.description %></p>
+        <% end %>
+      <% end %>
+      <hr />
+    <% end%>
+  </body>
+</html>

@@ -40,11 +40,17 @@ namespace :db do
     # Parents
     puts 'Parents'
     6.times do |n|
+      first_name = Faker::Name.first_name
+      last_name = Faker::Name.last_name
       email = "parent-#{n+1}@gmail.com"
       password  = "password"
-      parent = User.create!(:email => email,
-                          :password => password,
-                          :password_confirmation => password)
+      parent = User.create!(
+        :first_name => first_name, 
+        :last_name => last_name, 
+        :email => email,
+        :password => password,
+        :password_confirmation => password
+      )
       parent.add_role :parent      
     end
     parents = User.joins(:roles).where("roles.name = 'parent'")

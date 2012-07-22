@@ -69,6 +69,14 @@
               <%= link_to "Subjects", subjects_path %>
             </li>
             <% end %>
+            <% if current_user.has_role? :teacher %>
+            <li class="nav-header">
+              Teacher Pages
+            </li>
+            <li>
+              <%= link_to "Email Routines", teacher_routines_email_path %>
+            </li>
+            <% end %>
           </ul>
         </div>
       </div>

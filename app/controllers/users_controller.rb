@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :admin_only
+  before_filter :admin_only, :except => [:edit, :update]
+  before_filter :allow_current_user, :only => [:edit, :update]
   
   def index
     @users = User.where("id <> ?", current_user.id)
@@ -51,5 +52,11 @@ class UsersController < ApplicationController
       redirect_to users_path
     end
   end
-
+  
+  def allow_current_user
+    if current_user.id != params[:id].to_i and !current_user.has_role? :admin
+      msg = "Access restricted. Contact the administrator if you think there is an error"
+      redirect_to :back, :alert => msg
+    end
+  end
 end

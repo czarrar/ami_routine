@@ -1,0 +1,19 @@
+<% @routines_by_child_by_date.each do |child_name, routines_by_date| %>
+<%= child_name %>
+<%= child_name.length.times.collect { "=" }.join("") %>
+
+  <% routines_by_date.each do |date, routines| %>
+    <%= date %>
+    <%= date.length.times.collect { "-" }.join("") %>
+    
+    <% routines.each do |routine| %>
+        <%= routine.subject.name %>
+        <%= routine.description %>
+    <% end %>
+    
+    
+  <% end %>
+
+
+
+<% end%>
