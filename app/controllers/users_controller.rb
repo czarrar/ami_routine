@@ -39,7 +39,11 @@ class UsersController < ApplicationController
     end
     if @user.update_attributes(params[:user])
       flash[:notice] = "Successfully Updated User."
-      redirect_to users_path
+      if current_user.has_role? :admin
+        redirect_to users_path
+      else
+        redirect_to root_path
+      end
     else
       render :action => 'edit'
     end

@@ -7,7 +7,7 @@ gem 'bootstrap-sass', '2.0.4.0'
 gem 'bootswatch-rails', '0.0.12'
 gem 'rolify', '3.1.0'
 gem 'simple_form', '2.0.2'
-gem 'faker', '1.0.1'  # eventually move this to only development
+gem 'smile', '0.4.4'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -17,6 +17,7 @@ group :development, :test do
   gem 'pry', '0.9.9.6'
   gem 'pry-rails', '0.1.6'
   gem 'annotate', '~> 2.4.1.beta'
+  gem 'faker', '1.0.1'
 end
 
 group :production do

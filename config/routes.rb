@@ -34,6 +34,8 @@ AmiRoutine::Application.routes.draw do
   match '/routines/parent/:day/:month/:year' => "routines#parent"
   resources :routines
   
+  match '/media' => 'media#index'
+  match '/media/gallery/:id' => 'media#gallery', :as => "gallery"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

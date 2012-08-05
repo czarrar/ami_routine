@@ -8,6 +8,9 @@ class ChildrenController < ApplicationController
   
   def new
     @child = Child.new
+    
+    smug = get_smugmug
+    @albums = smug.albums.collect {|album| [album.title, "#{album.id} #{album.key}"] }
   end
   
   def create
@@ -26,6 +29,10 @@ class ChildrenController < ApplicationController
   
   def edit
     @child = Child.find(params[:id])
+    @child.album = "#{@child.album_id} #{@child.album_key}" if @child.album_id and @child.album_key
+    
+    smug = get_smugmug
+    @albums = smug.albums.collect {|album| [album.title, "#{album.id} #{album.key}"] }
   end
   
   def update

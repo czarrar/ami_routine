@@ -25,6 +25,11 @@
           <ul class="nav">
             <li><%= link_to "Home",         '/home' %></li>
             <li><%= link_to "Daily Routine", daily_routine_path %></li>
+            <% if user_signed_in? %>
+              <% if current_user.has_role? :parent %>
+                <li><%= link_to "Photos/Videos", media_path %>
+              <% end %>
+            <% end %>
             <li><%= link_to "Contact",      '/contact' %></li>
           </ul>
           <ul class="nav pull-right" style="margin-left:0px">

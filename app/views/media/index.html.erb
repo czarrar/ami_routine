@@ -1,0 +1,7 @@
+<h1>Select child</h1>
+<br />
+<ul>
+  <% @children.each do |id, name| %>
+  <li><p><%= link_to name, gallery_path(id) %></p></li>
+  <% end %>
+</ul>

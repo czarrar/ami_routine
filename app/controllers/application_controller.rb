@@ -7,7 +7,13 @@ class ApplicationController < ActionController::Base
   after_filter :set_xhr_flash
   
   helper_method :day_teacher_routines_path
-
+  
+  
+  ###
+  # AJAX-based functions
+  # used with jquery.REST
+  ###
+  
   def set_xhr_flash
     flash.discard if request.xhr?
   end
@@ -16,6 +22,39 @@ class ApplicationController < ActionController::Base
     ajax_request_types = ['text/javascript', 'application/json', 'text/xml']
     request.accepts.sort! { |x, y| ajax_request_types.include?(y.to_s) ? 1 : -1 } if request.xhr?
   end
+  
+  ###
+  # Hooks around login/logout
+  # that setup smugmug api
+  ###
+  
+  def get_smugmug
+    smug = Smile::Smug.new
+    smug.session.id = session[:smugmug_session]
+    smug.default_params
+    smug
+  end
+    
+  def after_sign_in_path_for(resource)
+    smug = Smile.auth('ismat7@gmail.com', 'hello101')
+    session[:smugmug_session] = smug.session.id
+    if (request.referer == login_url)
+      super
+    else
+      request.referer || stored_location_for(resource) || root_path
+    end
+  end
+  
+  def after_sign_out_path_for(resource)
+    smug = get_smugmug
+    smug.logout
+    session[:smugmug_session] = nil
+    root_path
+  end
+  
+  ###
+  # Helpers
+  ###
   
   def day_teacher_routines_path(date)
     "/teacher_routines/day/#{date.strftime('%-d-%-m-%Y')}"

@@ -9,7 +9,10 @@
   <%= f.input :email, :autofocus => true, :input_html => { :class => 'span4' } %>
   <%= f.input :password, :input_html => { :class => 'span4' } %>
   <%= f.input :password_confirmation, :input_html => { :class => 'span4' } %>
-  <%= f.association :roles %>
+  
+  <% if current_user.has_role? :admin %>
+    <%= f.association :roles %>
+  <% end %>
   
   <div class="form-actions">
     <%= f.button :submit %>
