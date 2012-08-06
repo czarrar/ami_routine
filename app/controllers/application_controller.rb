@@ -77,4 +77,9 @@ class ApplicationController < ActionController::Base
       redirect_to :back, :alert => msg if !current_user.has_role? :parent
     end
   
+    def email_only
+      msg = "Access restricted. Contact the administrator if you think there is an error"
+      redirect_to :back, :alert => msg if !current_user.has_role? :email
+    end
+  
 end

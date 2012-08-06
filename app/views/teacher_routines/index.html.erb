@@ -6,7 +6,9 @@
       <%= link_to 'New', teacher_routines_new_path(:date => params[:date]), :class => 'btn btn-primary' %>
       <% if @routines.count > 0 %>
       <%= link_to 'Edit All', teacher_routines_edit_path(:date => params[:date]), :class => 'btn btn-info' %>
+      <% if current_user.has_role? :email %>
       <%= link_to 'Email', teacher_routines_email_path(:starts_at => params[:date], :ends_at => params[:date]), :class => 'btn' %>
+      <% end %>
       <% end %>
     </div>
   <% else %>

@@ -1,6 +1,7 @@
 class TeacherRoutinesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :teacher_only
+  before_filter :email_only, :only => [:email]
   
   def calendar
     @subject_ids = Subject.all.collect { |subject| subject.id }

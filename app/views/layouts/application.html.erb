@@ -78,9 +78,11 @@
             <li class="nav-header">
               Teacher Pages
             </li>
+            <% if current_user.has_role? :email %>
             <li>
               <%= link_to "Email Routines", teacher_routines_email_path %>
             </li>
+            <% end %>
             <% end %>
           </ul>
         </div>
