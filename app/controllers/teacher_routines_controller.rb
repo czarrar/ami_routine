@@ -64,7 +64,7 @@ class TeacherRoutinesController < ApplicationController
           routine
         end
         results = @routines.each_with_index.collect do |routine, i|
-          routine.update_attributes(params[:routine][i])
+          routine.update_attributes(params[:routine][i.to_s])
         end
         raise Exception, 'Couldn\'t update one or more records' if results.include? false
       end
