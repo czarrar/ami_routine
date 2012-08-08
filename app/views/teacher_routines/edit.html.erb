@@ -1,3 +1,25 @@
+ <script type="text/javascript">
+   var custom_toolbar = 
+   [
+     { name: 'source', items: [ 'Source' ]}, 
+     { name: 'clipboard',   items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] }, 
+     { name: 'basicformatting', items: [ 'Bold', 'Italic', 'Underline', '-','RemoveFormat' ] }, 
+     { name: 'colors',      items : [ 'TextColor','BGColor' ] }, 
+     { name: 'paragraph',   items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote', '-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ] }, 
+     { name: 'styles',      items : [ 'Format','Font','FontSize' ] }           
+   ];
+   
+    $(document).ready(function() {
+        
+        $(".controls textarea").ckeditor(
+          function() {}, 
+          {
+            toolbar: custom_toolbar
+          }
+        );
+    });
+</script>
+
 <h1>Routine<small> on <%= @requested_day.strftime("%B %-d, %Y") %></small></h1>
 
 <%= form_tag({:controller => "teacher_routines", :action => "update"}, :class => "form-horizontal") %>

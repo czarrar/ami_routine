@@ -1,5 +1,23 @@
  <script type="text/javascript">
+   var custom_toolbar = 
+   [
+     { name: 'source', items: [ 'Source' ]}, 
+     { name: 'clipboard',   items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] }, 
+     { name: 'basicformatting', items: [ 'Bold', 'Italic', 'Underline', '-','RemoveFormat' ] }, 
+     { name: 'colors',      items : [ 'TextColor','BGColor' ] }, 
+     { name: 'paragraph',   items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote', '-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ] }, 
+     { name: 'styles',      items : [ 'Format','Font','FontSize' ] }           
+   ];
+   
     $(document).ready(function() {
+        
+        $("#set0 #routine_0_description").ckeditor(
+          function() {}, 
+          {
+            toolbar: custom_toolbar
+          }
+        );
+      
         $('#btnAdd').click(function() {
             var num     = $('.cloned').length - 1;  // how many "duplicatable" input fields we currently have
             var newNum  = new Number(num + 1);      // the numeric ID of the new input field being added
@@ -11,8 +29,6 @@
             // create the new element via clone(), and manipulate it's ID using newNum value
             var newElem = $('#set' + num).clone();
             var newElem = $(newElem).attr('id', 'set' + newNum);
-            
-            console.log($(newElem));
             
             // manipulate the name/id values of the input inside the new element
             //newElem.children(':first').attr('id', 'name' + newNum).attr('name', 'name' + newNum);
@@ -44,6 +60,10 @@
             description.attr('id', "routine_" + newNum + "_description")
             description.attr('name', 'routine[' + newNum + '][description]');
             
+            old_editor = $("#set" + newNum + " #cke_routine_" + num + "_description");
+            old_editor.remove();
+            description.ckeditor(function() {}, { toolbar: custom_toolbar } );
+            
             $(newElem).fadeIn('slow');
         });
  
@@ -54,7 +74,7 @@
               return;
             };
             
-            $('#set' + num).fadeOut('slow', function() { $(this).remove(); });     // remove the last element 
+            $('#set' + num).fadeOut('slow', function() { $(this).remove(); }); // remove the last element 
         });
     });
 </script>

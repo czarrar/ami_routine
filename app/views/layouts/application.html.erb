@@ -8,6 +8,8 @@
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "ckeditor/ckeditor.js" %>
+  <%= javascript_include_tag "ckeditor/adapters/jquery.js" %>
   <%= csrf_meta_tags %>
   <%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
 </head>

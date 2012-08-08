@@ -1,32 +1,19 @@
-<h1><%= @routine.subject.name %></h1>
+<h1>
+  <%= @routine.subject.name %>
+  <small>
+    <% if @routine.all_day %>
+      on <%= @routine.starts_at.strftime("%m/%d/%Y") %>
+    <% else %>
+      from <%= @routine.starts_at.strftime("%m/%d/%Y %I:%M %P" ) %> till <%= @routine.ends_at.strftime("%m/%d/%Y %I:%M %P" ) %>
+    <% end %>
+  </small>
+</h1>
 
 <p>
-  <b>Teacher:</b>
-  TODO
+  <em>by <%= @routine.children.collect { |child| child.name }.join(", ") %></em>
 </p>
 
 <p>
-  <b>Children:</b>
-  <%= @routine.children.collect { |child| child.name }.join(", ") %>
-</p>
-
-<p>
-  <b>Starts at:</b>
-  <%= @routine.starts_at %>
-</p>
-
-<p>
-  <b>Ends at:</b>
-  <%= @routine.ends_at %>
-</p>
-
-<p>
-  <b>All day:</b>
-  <%= @routine.all_day %>
-</p>
-
-<p>
-  <b>Description:</b>
   <%= @routine.description %>
 </p>
 
