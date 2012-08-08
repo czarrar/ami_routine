@@ -46,9 +46,13 @@ class ApplicationController < ActionController::Base
   end
   
   def after_sign_out_path_for(resource)
-    smug = get_smugmug
-    smug.logout
-    session[:smugmug_session] = nil
+    begin
+      smug = get_smugmug
+      smug.logout
+      session[:smugmug_session] = nil
+    rescue Smile::Exception
+      
+    end
     root_path
   end
   
