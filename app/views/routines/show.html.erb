@@ -13,9 +13,7 @@
   <em>by <%= @routine.children.collect { |child| child.name }.join(", ") %></em>
 </p>
 
-<p>
-  <%= @routine.description %>
-</p>
+<%= raw(@routine.description) %>
 
 <% if current_user.has_role? :teacher %>
   <%= link_to 'Edit', edit_routine_path(@routine) %> |

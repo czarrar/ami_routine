@@ -1,3 +1,35 @@
+ <script type="text/javascript">
+   var custom_toolbar = 
+   [
+     { name: 'source', items: [ 'Source' ]}, 
+     { name: 'clipboard',   items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] }, 
+     { name: 'basicformatting', items: [ 'Bold', 'Italic', 'Underline', '-','RemoveFormat' ] }, 
+     { name: 'colors',      items : [ 'TextColor','BGColor' ] }, 
+     { name: 'paragraph',   items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote', '-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ] }         
+   ];
+
+   $(document).ready(function() {
+       $("#routine_description").ckeditor(
+         function() {}, { toolbar: custom_toolbar }
+       );
+       
+       $('#routine_starts_at').datetimepicker({
+         ampm: true, 
+         dateFormat: 'D dd M yy', 
+          timeFormat: 'hh:mm tt',
+          separator: ', '
+       });
+       
+       $('#routine_ends_at').datetimepicker({
+         ampm: true, 
+         dateFormat: 'D dd M yy', 
+          timeFormat: 'hh:mm tt',
+          separator: ', '
+       });
+    });
+</script>
+
+
 <%= simple_form_for(@routine, :html => {:class => 'form-horizontal' }) do |f| %>
   <% if notification = f.error_notification %>
     <div class="alert alert-error fade in">

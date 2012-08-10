@@ -27,7 +27,7 @@
   <% end %>
   <br />
   <em><%= routine.children.collect { |child| child.name }.join(", ") %></em><br />
-  <%= routine.description %>
+  <%= raw(routine.description) %>
 </p>
 <p>
   <%= link_to 'Edit', edit_routine_path(routine), :class => "btn btn-mini" %>

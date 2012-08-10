@@ -20,7 +20,7 @@
     <div class="content">
       <% routines.each do |routine| %>
         <h3><%= routine.subject.name %></h3>
-        <p><%= routine.description %></p>
+        <%= raw(routine.description) %>
       <% end %>
     </div>
   <% end %>
