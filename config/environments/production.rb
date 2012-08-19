@@ -64,7 +64,7 @@ AmiRoutine::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( application-all.css application-print.css )
+  config.assets.precompile += %w( application-all.css application-print.css ckeditor/* )
   
   # Enable threaded mode
   # config.threadsafe!
