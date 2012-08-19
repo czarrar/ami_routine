@@ -16,5 +16,4 @@
 //= require_directory ./external
 //= require bootstrap
 //= require_directory ./custom
-//= require ckeditor/ckeditor
-//= require ckeditor/adapters/jquery
+//= require ckeditor-jquery
