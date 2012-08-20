@@ -62,11 +62,11 @@ class RoutinesController < ApplicationController
   end
   
   def edit
-    @routine = current_user.routines.find(params[:id])
+    @routine = Routine.find(params[:id])
   end
   
   def update
-    @routine = current_user.routines.find(params[:id])
+    @routine = Routine.find(params[:id])
     
     respond_to do |format|
       if @routine.update_attributes(params[:routine])
@@ -82,7 +82,11 @@ class RoutinesController < ApplicationController
   end
   
   def destroy
-    @routine = current_user.routines.find(params[:id])
+    if current_user.has_role? :admin
+      @routine = Routine.find(params[:id])
+    else
+      @routine = current_user.routines.find(params[:id])
+    end
     
     respond_to do |format|
       if @routine.destroy

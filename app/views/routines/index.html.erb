@@ -20,13 +20,13 @@
     <% @routines.each do |routine| %>
       <tr>
         <td><%= routine.id %></td>
-        <td>TODO</td>
+        <td><%= routine.user.name %></td>
         <td><%= routine.children.collect { |child| child.name }.join(", ") %></td>
         <td><%= routine.starts_at %></td>
         <td><%= routine.ends_at %></td>
         <td><%= routine.all_day %></td>
         <td><%= routine.subject.name %></td>
-        <td><%= routine.description %></td>
+        <td><%= raw(routine.description) %></td>
         <% if current_user.has_role? :teacher %>
         <td>
           <%= link_to 'Edit', edit_routine_path(routine), :class => "btn btn-mini" %>
