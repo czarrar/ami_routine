@@ -8,6 +8,7 @@ gem 'bootswatch-rails', '0.0.12'
 gem 'rolify', '3.1.0'
 gem 'simple_form', '2.0.2'
 gem 'smile', '0.4.4'
+gem 'paperclip', '3.1.4'
 gem 'ckeditor', '3.7.1'
 
 # Bundle edge Rails instead:
