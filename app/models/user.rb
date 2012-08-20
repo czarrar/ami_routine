@@ -21,6 +21,13 @@
 #  updated_at             :datetime        not null
 #  first_name             :string(255)
 #  last_name              :string(255)
+#  phone_home             :string(255)
+#  phone_work             :string(255)
+#  phone_mobile           :string(255)
+#  address_home           :string(255)
+#  city_home              :string(255)
+#  zip_home               :string(255)
+#  notes                  :text
 #
 
 class User < ActiveRecord::Base
@@ -34,9 +41,17 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
                   :first_name, :last_name, 
+                  :phone_home, :phone_work, :phone_mobile, 
+                  :address_home, :city_home, :zip_home, 
+                  :notes, 
                   :role_ids, :child_ids
   
-  validates :email, :presence => true
+  validates :email, :presence => true, 
+                    :uniqueness => { :case_sensitive => false }, 
+                    :format => { :with => /^[^@][\w.-]+@[\w.-]+[.][a-z]{2,4}$/i }
+  
+  validates :zip, :allow_blank => true,
+                  :length => { :is => 5 }
   
   has_many :routines
   has_and_belongs_to_many :children

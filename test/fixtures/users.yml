@@ -32,5 +32,12 @@ two: {}
 #  updated_at             :datetime        not null
 #  first_name             :string(255)
 #  last_name              :string(255)
+#  phone_home             :string(255)
+#  phone_work             :string(255)
+#  phone_mobile           :string(255)
+#  address_home           :string(255)
+#  city_home              :string(255)
+#  zip_home               :string(255)
+#  notes                  :text
 #
 

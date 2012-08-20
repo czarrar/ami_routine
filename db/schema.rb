@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120725043301) do
+ActiveRecord::Schema.define(:version => 20120820202818) do
 
   create_table "children", :force => true do |t|
     t.string   "first_name"
@@ -96,6 +96,13 @@ ActiveRecord::Schema.define(:version => 20120725043301) do
     t.datetime "updated_at",                             :null => false
     t.string   "first_name"
     t.string   "last_name"
+    t.string   "phone_home"
+    t.string   "phone_work"
+    t.string   "phone_mobile"
+    t.string   "address_home"
+    t.string   "city_home"
+    t.string   "zip_home"
+    t.text     "notes"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
