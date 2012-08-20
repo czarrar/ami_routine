@@ -1,4 +1,6 @@
 AmiRoutine::Application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
+
   get "home/index"
   get "home/contact"
   match '/home' => "home#index"
