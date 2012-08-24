@@ -26,8 +26,8 @@ AmiRoutine::Application.configure do
     domain: "localhost.com:3000",
     authentication: :plain,
     enable_starttls_auto: true,
-    user_name: ENV["GMAIL_USERNAME"],
-    password: ENV["GMAIL_PASSWORD"]
+    user_name: ENV["GMAIL_SMTP_USER"],
+    password: ENV["GMAIL_SMTP_PASSWORD"]
   }
   
   # Print deprecation notices to the Rails logger
