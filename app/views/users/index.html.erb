@@ -4,10 +4,9 @@
   <thead>
 	  <tr>
       <th>ID</th>
+      <th>Name</th>
       <th>Email</th>
       <th>Roles</th>
-      <th>Recent Sign In</th>
-      <th>IP from Recent Sign In</th>
       <th>Created On</th>
       <th>Actions</th>
     </tr>
@@ -16,10 +15,9 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= user.id %></td>
+        <td><%= user.name %></td>
         <td><%= user.email %></td>
         <td><%= user.roles.map{ |role| role.name }.join(", ") %></td>
-        <td><%= user.current_sign_in_at %></td>
-        <td><%= user.current_sign_in_ip %></td>
         <td><%= user.created_at %></td>
         <td>
           <%= link_to 'Edit', edit_user_path(user), :class => "btn btn-mini" %>
