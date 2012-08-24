@@ -8,7 +8,7 @@
 
   <%= f.input :first_name, :input_html => { :class => 'span4' } %>
   <%= f.input :last_name, :input_html => { :class => 'span4' } %>
-  <%= f.association(:user, :collection => User.joins(:roles).where("roles.name = 'parent'"), :label_method => :email) %>
+  <%= f.association(:user, :label => "Parent(s)", :collection => User.joins(:roles).where("roles.name = 'parent'"), :label_method => :name, :input_html => { :class => 'span4' }) %>
   <%= f.input :album, :collection => @albums  %>
   
   <div class="form-actions">

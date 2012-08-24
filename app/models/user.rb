@@ -50,8 +50,8 @@ class User < ActiveRecord::Base
                     :uniqueness => { :case_sensitive => false }, 
                     :format => { :with => /^[^@][\w.-]+@[\w.-]+[.][a-z]{2,4}$/i }
   
-  validates :zip, :allow_blank => true,
-                  :length => { :is => 5 }
+  validates :zip_home, :allow_blank => true,
+                       :length => { :is => 5 }
   
   has_many :routines
   has_and_belongs_to_many :children
