@@ -20,6 +20,10 @@
 
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider) %><br />
+    <% provider_name = provider.to_s %>
+    <% if provider_name == 'google_oauth2'%>
+      <% provider_name = 'google' %>      
+    <% end %>
+    <%= link_to "Sign in with #{provider_name.titleize}", omniauth_authorize_path(resource_name, provider) %><br />
   <% end -%>
 <% end -%>

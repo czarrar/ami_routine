@@ -10,6 +10,8 @@ gem 'simple_form', '2.0.2'
 gem 'smile', '0.4.4'
 gem 'paperclip', '3.1.4'
 gem 'ckeditor', '3.7.1'
+gem 'omniauth-facebook', '1.4.1'
+gem 'omniauth-google-oauth2', '0.1.13'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

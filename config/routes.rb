@@ -5,7 +5,8 @@ AmiRoutine::Application.routes.draw do
   get "home/contact"
   match '/home' => "home#index"
   
-  devise_for :users, :path_prefix => 'd'
+  devise_for :users, :path_prefix => 'd', controllers: {omniauth_callbacks: "omniauth_callbacks"}
+
   devise_scope :user do
     get '/login' => 'devise/sessions#new'
     get '/logout' => 'devise/sessions#destroy'  
