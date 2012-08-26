@@ -4,6 +4,7 @@ AmiRoutine::Application.routes.draw do
   get "home/index"
   get "home/contact"
   match '/home' => "home#index"
+  match '/contact' => "home#contact"
   
   devise_for :users, :path_prefix => 'd', controllers: {omniauth_callbacks: "omniauth_callbacks"}
 
