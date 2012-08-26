@@ -16,23 +16,32 @@
   <% end %>
 </h1>
 <br />
-<% @routines.each_with_index do |routine, i| %>
-<% if i > 0 %>
-<hr />
-<% end %>
-<p>
-  <strong><%= routine.subject.name %></strong>
-  <% if routine.published %>
-    (published)
+<% @rr_hash.each_with_index do |hash, i| %>
+  <% if i > 0 %>
+  <hr />
   <% end %>
-  <br />
-  <em><%= routine.children.collect { |child| child.name }.join(", ") %></em><br />
-  <%= raw(routine.description) %>
-</p>
-<p>
-  <%= link_to 'Edit', edit_routine_path(routine), :class => "btn btn-mini" %>
-  <%= link_to 'Delete', routine, :confirm => "Are you sure?", :method => :delete, :class => 'btn btn-mini btn-danger' %>
-</p>
+  <p>
+    <strong><%= hash[:routine].subject.name %></strong>
+    <% if hash[:routine].published %>
+      (published)
+    <% end %>
+    <br />
+    <em><%= hash[:routine].children.collect { |child| child.name }.join(", ") %></em><br />
+    <%= raw(hash[:routine].description) %><br />
+    <em><a class="pageviews" href="#" rel="popover" title="
+    <% hash[:readings].each do |reading| %>
+     <%= reading.user.name %>: <%= reading.count %><br />
+    <% end %>
+    ">Total Views: <%= hash[:total_count] %></a></em>
+  </p>
+  <p>
+    <%= link_to 'Edit', edit_routine_path(hash[:routine]), :class => "btn btn-mini" %>
+    <%= link_to 'Delete', hash[:routine], :confirm => "Are you sure?", :method => :delete, :class => 'btn btn-mini btn-danger' %>
+  </p>
 <% end %>
+
+<script type="text/javascript">
+  $('.pageviews').tooltip({'placement': 'right'});
+</script>
 
 

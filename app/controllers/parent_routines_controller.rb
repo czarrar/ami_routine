@@ -24,6 +24,7 @@ class ParentRoutinesController < ApplicationController
       routines = routines.range_for_day(@requested_day) if params[:date]
       routines = routines.order('starts_at DESC')
       routines = routines.published?
+      RoutineReading.batch_increment_routines(current_user, routines)
       [child.name, routines]
     end
     @routines_by_child = Hash[ *@routines_by_child.flatten(1) ]

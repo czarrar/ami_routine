@@ -57,6 +57,7 @@ class User < ActiveRecord::Base
   has_many :authentications
   has_and_belongs_to_many :children
   has_and_belongs_to_many :roles, :join_table => :users_roles
+  has_many :routine_readings
   
   def name
     "#{first_name} #{last_name}"

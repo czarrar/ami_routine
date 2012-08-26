@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120825215109) do
+ActiveRecord::Schema.define(:version => 20120826150659) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -56,6 +56,16 @@ ActiveRecord::Schema.define(:version => 20120825215109) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
+
+  create_table "routine_readings", :force => true do |t|
+    t.integer  "routine_id"
+    t.integer  "user_id"
+    t.integer  "count",      :default => 0
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "routine_readings", ["routine_id", "user_id"], :name => "index_routine_readings_on_routine_id_and_user_id", :unique => true
 
   create_table "routines", :force => true do |t|
     t.integer  "user_id"

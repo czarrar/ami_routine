@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
-  def index
-    if current_user.has_role? :parent
+  def index    
+    if user_signed_in? and current_user.has_role? :parent
       # Get routines completed on the most recent day
       child_names = current_user.children
       @children = child_names.collect do |child|
@@ -11,6 +11,7 @@ class HomeController < ApplicationController
         if latest_routine
           requested_day = latest_routine.ends_at.midnight
           routines = routines.range_for_day(requested_day)
+          RoutineReading.batch_increment_routines(current_user, routines)
         else
           requested_day = Time.now.midnight
           routines = []

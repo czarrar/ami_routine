@@ -91,6 +91,12 @@ class TeacherRoutinesController < ApplicationController
     @routines = @routines.range_for_day(Time.parse(params[:date])) if params[:date]
     @routines = @routines.joins(:subject).order("published ASC, subjects.name ASC")
     
+    @rr_hash = @routines.collect do |routine|
+      readings = RoutineReading.where(:routine_id => routine.id)
+      total_count = readings.inject(0){|sum, e1| sum + e1.count}
+      {routine: routine, readings: readings, total_count: total_count}
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @routines }

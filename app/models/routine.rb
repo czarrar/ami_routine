@@ -22,6 +22,7 @@ class Routine < ActiveRecord::Base
   belongs_to :user
   belongs_to :subject
   has_and_belongs_to_many :children
+  has_many :routine_readings
   
   scope :before, lambda {|end_time| {:conditions => ["ends_at < ?", Routine.format_date(end_time)] }}
   scope :after, lambda {|start_time| {:conditions => ["starts_at > ?", Routine.format_date(start_time)] }}

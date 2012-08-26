@@ -15,6 +15,20 @@
 
 <%= raw(@routine.description) %>
 
+<% if !current_user.has_role? :parent %>
+<p>
+  <em><a id="pageviews" href="#" rel="popover" title="
+  <% @readings.each do |reading| %>
+   <%= reading.user.name %>: <%= reading.count %><br />
+  <% end %>
+  ">Total Page Views: <%= @total_count %></a></em>
+</p>
+
+<script type="text/javascript">
+  $('#pageviews').tooltip({'placement': 'right'});
+</script>
+<% end %>
+
 <% if current_user.has_role? :teacher %>
   <%= link_to 'Edit', edit_routine_path(@routine) %> |
 <% end %>

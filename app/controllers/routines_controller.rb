@@ -31,6 +31,13 @@ class RoutinesController < ApplicationController
     end
     @routine = @routine.find(params[:id])
     
+    if current_user.has_role? :parent
+      RoutineReading.batch_increment_routines(current_user, [@routine])
+    else
+      @readings = RoutineReading.where(:routine_id => @routine.id)
+      @total_count = @readings.inject(0){|sum, e1| sum + e1.count}
+    end
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @routine }
