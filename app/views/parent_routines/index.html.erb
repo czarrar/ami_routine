@@ -17,7 +17,7 @@
 <div class="parent-routine">
   <% @routines_by_child.each do |child_name, routines| %>
   <h2>for <%= child_name %></h2>
-    <div class="content">
+    <div class="routine-content">
       <% routines.each do |routine| %>
         <h3><%= routine.subject.name %></h3>
         <%= raw(routine.description) %>

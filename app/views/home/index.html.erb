@@ -1,2 +1,66 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<% if user_signed_in? %>
+  <% if current_user.has_role? :parent %>
+    <div class="parent-routine">
+      <% if @children.length > 1 %>
+        <div class="child-nav">
+          <% @children.each_with_index do |child, i| %>
+            <%= "|" if i > 0 %>
+            <%= link_to child[:name], "##{child[:name]}" %>
+          <% end %>
+        </div>
+      <% end %>
+      
+      <% @children.each do |child| %>
+        <h1 id="<%= child[:name] %>" class="anchor-fix">
+          <%= child[:name] %>
+        </h1>
+        
+        <div class="routine-photo">
+          <% if child[:routines].present? %>      
+            <h2>
+              Routines
+              <small> for <%= child[:date].strftime("%B %-d, %Y") %></small>
+            </h2>
+            <div class="routine-content">
+              <% child[:routines].each do |routine| %>
+                <h3><%= routine.subject.name %></h3>
+                <%= raw(routine.description) %>
+              <% end %>
+            </div>
+          <% end %>
+        
+          <% if child[:photos].present? %>      
+            <h2>
+              Recent Photos
+            </h2>
+            <div id="myCarousel" class="carousel slide" style="width: 400px;">
+              <!-- Carousel items -->
+              <div class="carousel-inner">
+                <% child[:photos].each_with_index do |photo, i| %>
+                <div class="<%= i==0 ? 'active ' : '' %>item">
+                  <%= image_tag photo.smallurl %>
+                </div>
+                <% end %>
+              </div>
+              <!-- Carousel nav -->
+              <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+              <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+            </div>
+          <% end %>
+        </div>
+        <hr />
+      <% end %>
+    </div>
+    
+    <script type='text/javascript'>
+      $('#myCarousel').carousel({
+        interval: 3000
+      })
+    </script>
+  <% else %>
+    <p>Use the links on the left and topic to navigate about.</p>
+  <% end %>
+<% else %>
+  <p>Please login.</p>
+<% end %>
+

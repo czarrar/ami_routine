@@ -1,3 +1,18 @@
 // Place all the styles related to the Home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+div.parent-routine {
+  .child-nav {
+    margin-bottom: 20px;
+  }
+  
+  .anchor-fix {
+    padding-top: 40px;
+    margin-top: -40px;
+  }
+  
+  .routine-photo {
+    padding-left: 25px;
+  }
+}

@@ -3,12 +3,16 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .parent-routine {
+  h1 {
+    margin-bottom: -10px;
+  }
+  
   h2 {
     margin-top: 25px;
     margin-bottom: 10px;
   }
   
-  .content {
+  .routine-content {
     padding-left: 15px;
     border-left: 1px solid grey;
   }
