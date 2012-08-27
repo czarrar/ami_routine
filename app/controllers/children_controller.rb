@@ -9,6 +9,8 @@ class ChildrenController < ApplicationController
   def new
     @child = Child.new
     
+    set_vars_for_child_user
+    
     smug = get_smugmug
     @albums = smug.albums.collect {|album| [album.title, "#{album.id} #{album.key}"] }
   end
@@ -31,6 +33,8 @@ class ChildrenController < ApplicationController
     @child = Child.find(params[:id])
     @child.album = "#{@child.album_id} #{@child.album_key}" if @child.album_id and @child.album_key
     
+    set_vars_for_child_user
+    
     smug = get_smugmug
     @albums = smug.albums.collect {|album| [album.title, "#{album.id} #{album.key}"] }
   end
@@ -51,5 +55,13 @@ class ChildrenController < ApplicationController
       flash[:notice] = "Successfully deleted child."
       redirect_to children_path
     end
+  end
+  
+  def set_vars_for_child_user
+    @parents = User.joins(:roles).where("roles.name = 'parent'")
+    @child_users = @child.child_users
+    @child_users = @child.child_users.new if @child_users.empty?
+    @relationships = ["Father", "Mother", "Uncle", "Aunt", "Grandfather", 
+                      "Grandmother", "Other"]
   end
 end

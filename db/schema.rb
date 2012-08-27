@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120826150659) do
+ActiveRecord::Schema.define(:version => 20120827021119) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(:version => 20120826150659) do
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
   end
+
+  create_table "child_users", :id => false, :force => true do |t|
+    t.integer "child_id"
+    t.integer "user_id"
+    t.string  "relationship"
+  end
+
+  add_index "child_users", ["child_id", "user_id"], :name => "index_children_users_on_child_id_and_user_id", :unique => true
 
   create_table "children", :force => true do |t|
     t.string   "first_name"
@@ -38,13 +46,6 @@ ActiveRecord::Schema.define(:version => 20120826150659) do
   end
 
   add_index "children_routines", ["child_id", "routine_id"], :name => "index_children_routines_on_child_id_and_routine_id", :unique => true
-
-  create_table "children_users", :id => false, :force => true do |t|
-    t.integer "child_id"
-    t.integer "user_id"
-  end
-
-  add_index "children_users", ["child_id", "user_id"], :name => "index_children_users_on_child_id_and_user_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"

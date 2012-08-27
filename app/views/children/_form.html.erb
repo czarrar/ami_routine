@@ -1,3 +1,68 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+    
+		var relationships = [
+			"Father",
+			"Mother",
+			"Uncle",
+			"Aunt",
+			"Grandfather", 
+      "Grandmother"
+		];
+		$( ".relationship" ).autocomplete({
+			source: relationships, 
+      delay: 0
+		});
+
+    function update_added_form_field (old_index, new_index, key) {
+      var div_id = "#set";
+      var field_id_prefix = "#child_child_users_attributes";
+      var attrs_to_update = ["id", "name"];
+      
+      var form_field = $("{1}{2} {3}_{4}_{5}".format(
+                          div_id, new_index, field_id_prefix, old_index, key
+                        ));
+      $.each(attrs_to_update, function(ind, val) {
+        form_field.attr(val, form_field.attr(val).replace(old_index, new_index));
+      });
+      form_field.val('');
+      
+      return;
+    }
+      
+    $('#btnAdd').click(function() {
+        var fields = ["id", "user_id", "relationship"];
+      
+        var num     = $('.cloned').length - 1;  // how many "duplicatable" input fields we currently have
+        var newNum  = new Number(num + 1);      // the numeric ID of the new input field being added
+            
+        if (newNum == 99)
+          return;
+            
+        // create the new section via clone(), and manipulate it's ID using newNum value
+        var newElem = $('#set{1}'.format(num)).clone();
+        var newElem = $(newElem).attr('id', 'set{1}'.format(newNum));
+         
+        // insert the new section after the last "duplicatable" input field
+        $(newElem).fadeIn('slow').insertAfter('#set' + num);
+        
+        // update index for each form field
+        $.each(fields, function(i, field) {
+          update_added_form_field(num, newNum, field);
+        })
+    });
+ 
+    $('#btnDel').click(function() {
+        var num = $('.cloned').length - 1; // how many "duplicatable" input fields we currently have
+            
+        if (num == 0)
+          return;
+        
+        $('#set' + num).fadeOut('slow', function() { $(this).remove(); }); // remove the last element 
+    });
+  });
+</script>
+
 <%= simple_form_for(@child, :html => {:class => 'form-horizontal' }) do |f| %>
   <% if notification = f.error_notification %>
     <div class="alert alert-error fade in">
@@ -8,7 +73,32 @@
 
   <%= f.input :first_name, :input_html => { :class => 'span4' } %>
   <%= f.input :last_name, :input_html => { :class => 'span4' } %>
-  <%= f.association(:user, :label => "Parent(s)", :collection => User.joins(:roles).where("roles.name = 'parent'"), :label_method => :name, :input_html => { :class => 'span4' }) %>
+    
+  <div class="control-group select optional">
+    <label class="select optional control-label" for="child_user">Parent(s)</label>
+    <% @child_users.each_with_index do |child_user, i| %>
+      <div id="set<%= i %>" class="controls cloned" style="margin-bottom: 10px;">
+        <%= hidden_field_tag "child[child_users_attributes][#{i}][id]", child_user.id %>
+        
+        <%= select_tag "child[child_users_attributes][#{i}][user_id]", 
+            options_for_select(
+              @parents.collect{|p| [p.name, p.id]}.insert(0, ["", 0]), 
+              child_user.user_id
+            ), :class => "select optional span3" %>
+        
+        <%= text_field_tag "child[child_users_attributes][#{i}][relationship]", 
+              child_user.relationship, 
+              :placeholder => "Relationship? (Father, Mother, etc)", 
+              :class => "select optional relationship span3" %>        
+      </div>
+    <% end %>
+        
+    <div class="controls">
+      <a id="btnAdd">Add</a> | 
+      <a id="btnDel">Remove</a>
+    </div>
+  </div>
+    
   <%= f.input :album, :collection => @albums  %>
   
   <div class="form-actions">
