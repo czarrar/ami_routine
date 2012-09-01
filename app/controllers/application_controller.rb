@@ -75,7 +75,6 @@ class ApplicationController < ActionController::Base
       smug = Smile.auth('ismat7@gmail.com', 'hello101')
       session[:smugmug_session] = smug.session.id
       session[:smugmug_expires_on] = Time.now + 1.day
-      binding.pry
       return smug
     end
     
