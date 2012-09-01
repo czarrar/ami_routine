@@ -29,15 +29,19 @@ class ApplicationController < ActionController::Base
   ###
   
   def get_smugmug
-    smug = Smile::Smug.new
-    smug.session.id = session[:smugmug_session]
-    smug.default_params
-    smug
+    if session[:smugmug_expires_on].nil?
+      smug = smugmug_login
+    elsif session[:smugmug_expires_on] < Time.now
+      smugmug_logout
+      smug = smugmug_login
+    else
+      smug = smugmug
+    end
+    return smug
   end
     
   def after_sign_in_path_for(resource)
-    smug = Smile.auth('ismat7@gmail.com', 'hello101')
-    session[:smugmug_session] = smug.session.id
+    smugmug_login
     if (request.referer == login_url)
       super
     else
@@ -46,13 +50,7 @@ class ApplicationController < ActionController::Base
   end
   
   def after_sign_out_path_for(resource)
-    begin
-      smug = get_smugmug
-      smug.logout
-      session[:smugmug_session] = nil
-    rescue Smile::Exception
-      
-    end
+    smugmug_logout
     root_path
   end
   
@@ -65,7 +63,33 @@ class ApplicationController < ActionController::Base
   end
   
   private
-  
+    
+    def smugmug
+      smug = Smile::Smug.new
+      smug.session.id = session[:smugmug_session]
+      smug.default_params
+      return smug
+    end
+    
+    def smugmug_login
+      smug = Smile.auth('ismat7@gmail.com', 'hello101')
+      session[:smugmug_session] = smug.session.id
+      session[:smugmug_expires_on] = Time.now + 1.day
+      binding.pry
+      return smug
+    end
+    
+    def smugmug_logout
+      begin
+        smug = smugmug
+        smug.logout
+      rescue Smile::Exception
+        
+      end
+      session[:smugmug_session] = nil
+      session[:smugmug_expires_on] = nil
+    end
+    
     def admin_only
       msg = "Access restricted. Contact the administrator if you think there is an error"
       redirect_to :back, :alert => msg if !current_user.has_role? :admin

@@ -16,7 +16,7 @@
         <td><%= child.id %></td>
         <td><%= child.first_name %></td>
         <td><%= child.last_name %></td>        
-        <td><%= child.user.collect{|parent| parent.name}.join(", ") %></td>
+        <td><%= child.users.collect{|parent| parent.name}.join(", ") %></td>
         <td>
           <%= link_to 'Edit', edit_child_path(child), :class => "btn btn-mini" %>
           <%= link_to 'Delete', child, :confirm => "Are you sure?", :method => :delete, :class => 'btn btn-mini btn-danger' %>
