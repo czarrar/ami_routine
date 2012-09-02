@@ -1,9 +1,39 @@
-<h1>Routines</h1>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#routines').dataTable({
+      "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+      "sPaginationType": "bootstrap", 
+      "bProcessing": true, 
+      "bServerSide": true, 
+      "sAjaxSource": $('#routines').data('source'), 
+      "aoColumns": [
+        null,  // Teacher
+        { "bSortable": false }, // Children
+        null, // Start
+        null, // End
+        { "bSearchable": false }, // All Day?
+        null, // Subject
+        null, // Description
+        <% if current_user.has_role? :teacher %>
+        { "bSortable": false, "bSearchable": false }
+        <% end %>
+      ]
+    });
+  });
+</script>
 
-<table class="table">
+<h1>
+  Routines
+  <div class="pull-right">
+    <% if current_user.has_role? :teacher %>
+      <%= link_to 'New', new_routine_path, :class => 'btn btn-primary' %>
+    <% end %>
+  </div>
+</h1>
+
+<table id="routines" class="table display" data-source="<%= routines_url(format: "json") %>">
   <thead>
 	  <tr>
-      <th>ID</th>
       <th>Teacher</th>
       <th>Children</th>
       <th>Start Date/Time</th>
@@ -17,27 +47,11 @@
     </tr>
   </thead>
   <tbody>
-    <% @routines.each do |routine| %>
-      <tr>
-        <td><%= routine.id %></td>
-        <td><%= routine.user.name %></td>
-        <td><%= routine.children.collect { |child| child.name }.join(", ") %></td>
-        <td><%= routine.starts_at %></td>
-        <td><%= routine.ends_at %></td>
-        <td><%= routine.all_day %></td>
-        <td><%= routine.subject.name %></td>
-        <td><%= raw(routine.description) %></td>
-        <% if current_user.has_role? :teacher %>
-        <td>
-          <%= link_to 'Edit', edit_routine_path(routine), :class => "btn btn-mini" %>
-          <%= link_to 'Delete', routine, :confirm => "Are you sure?", :method => :delete, :class => 'btn btn-mini btn-danger' %>
-        </td>
-        <% end %>
-      </tr>
-    <% end %>
   </tbody>
 </table>
 
+<div class="pull-right">
 <% if current_user.has_role? :teacher %>
   <%= link_to 'New', new_routine_path, :class => 'btn btn-primary' %>
 <% end %>
+</div>

@@ -1,6 +1,20 @@
-<h1>Users</h1>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#users').dataTable({
+      "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+      "sPaginationType": "bootstrap"
+    });
+  });
+</script>
 
-<table class="table">
+<h1>
+  Users
+  <div class="pull-right">
+    <%= link_to 'New', new_user_path, :class => 'btn btn-primary' %>
+  </div>
+</h1>
+
+<table id="users" class="table display">
   <thead>
 	  <tr>
       <th>ID</th>
@@ -29,4 +43,6 @@
   </tbody>
 </table>
 
-<%= link_to 'New', new_user_path, :class => 'btn btn-primary' %>
+<div class="pull-right">
+  <%= link_to 'New', new_user_path, :class => 'btn btn-primary' %>
+</div>
