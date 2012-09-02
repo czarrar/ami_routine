@@ -142,7 +142,7 @@ class TeacherRoutinesController < ApplicationController
         routines_by_child_by_date = children.collect do |child|
           routines = child.routines.scoped
           routines = routines.where('starts_at >= ?', Time.strptime(form.starts_at, "%m/%d/%Y"))
-          routines = routines.where('ends_at <= ?', Time.strptime(form.ends_at, "%m/%d/%Y"))
+          routines = routines.where('ends_at <= ?', Time.strptime(form.ends_at, "%m/%d/%Y") + 1.day - 1.second)
           routines = routines.published?
           routines = routines.order('starts_at ASC')
           routines_by_date = routines.group_by {|routine| routine.starts_at.strftime('%B %-d, %Y') }
