@@ -8,7 +8,7 @@
     
     <% routines.each do |routine| %>
         <%= routine.subject.name %>
-        <%= routine.description %>
+        <%= strip_tags(routine.description) %>
     <% end %>
     
     
