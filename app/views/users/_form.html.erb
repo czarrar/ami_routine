@@ -15,6 +15,15 @@
   
   <% if current_user.has_role? :admin %>
     <%= f.association :roles %>
+  <% else %>
+    <div class="control-group">
+      <label class="roles control-label">
+        Roles
+      </label>
+      <div class="controls text">
+        <%= @user.roles.collect{|r| r.name }.join(", ") %>
+      </div>
+    </div>
   <% end %>
   </fieldset>
   
