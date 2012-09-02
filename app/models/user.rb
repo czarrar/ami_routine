@@ -85,8 +85,7 @@ class User < ActiveRecord::Base
     end
   
     def from_omniauth_create(auth)
-      user = where("email = :email OR (first_name = :first_name AND last_name = :last_name)", 
-                    auth.info.slice(:email, :first_name, :last_name)).first
+      user = where("email = :email", auth.info.slice(:email)).first
       user.link_to_omniauth(auth) if user.present?
       return user
     end
