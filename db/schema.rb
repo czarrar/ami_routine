@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120827021119) do
+ActiveRecord::Schema.define(:version => 20120902230707) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(:version => 20120827021119) do
     t.datetime "updated_at",       :null => false
   end
 
-  create_table "child_users", :id => false, :force => true do |t|
+  create_table "child_users", :force => true do |t|
     t.integer "child_id"
     t.integer "user_id"
     t.string  "relationship"
@@ -68,6 +68,15 @@ ActiveRecord::Schema.define(:version => 20120827021119) do
 
   add_index "routine_readings", ["routine_id", "user_id"], :name => "index_routine_readings_on_routine_id_and_user_id", :unique => true
 
+  create_table "routine_templates", :force => true do |t|
+    t.integer  "sub_subject_id"
+    t.string   "name"
+    t.text     "description"
+    t.text     "notes"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
   create_table "routines", :force => true do |t|
     t.integer  "user_id"
     t.text     "description"
@@ -89,6 +98,13 @@ ActiveRecord::Schema.define(:version => 20120827021119) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "sub_subjects", :force => true do |t|
+    t.string   "name"
+    t.integer  "subject_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "subjects", :force => true do |t|
     t.string   "name"

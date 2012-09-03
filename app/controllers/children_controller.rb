@@ -9,18 +9,16 @@ class ChildrenController < ApplicationController
   def new
     @child = Child.new
     
-    set_vars_for_child_user
-    
-    smug = get_smugmug
-    @albums = smug.albums.collect {|album| [album.title, "#{album.id} #{album.key}"] }
+    set_parents_and_albums
   end
   
   def create
-    @child = Child.new(params[:child])
+      @child = Child.new(params[:child])
     if @child.save
       flash[:notice] = "Successfully added child." 
       redirect_to children_path
     else
+      set_parents_and_albums
       render :action => 'new'
     end
   end
@@ -33,10 +31,7 @@ class ChildrenController < ApplicationController
     @child = Child.find(params[:id])
     @child.album = "#{@child.album_id} #{@child.album_key}" if @child.album_id and @child.album_key
     
-    set_vars_for_child_user
-    
-    smug = get_smugmug
-    @albums = smug.albums.collect {|album| [album.title, "#{album.id} #{album.key}"] }
+    set_parents_and_albums    
   end
   
   def update
@@ -45,6 +40,7 @@ class ChildrenController < ApplicationController
       flash[:notice] = "Successfully updated child."
       redirect_to children_path
     else
+      set_parents_and_albums
       render :action => 'edit'
     end
   end
@@ -57,11 +53,11 @@ class ChildrenController < ApplicationController
     end
   end
   
-  def set_vars_for_child_user
-    @parents = User.joins(:roles).where("roles.name = 'parent'")
-    @child_users = @child.child_users
-    @child_users = @child.child_users.new if @child_users.empty?
-    @relationships = ["Father", "Mother", "Uncle", "Aunt", "Grandfather", 
-                      "Grandmother", "Other"]
-  end
+  private
+    def set_parents_and_albums
+      @parents = User.joins(:roles).where("roles.name = 'parent'")
+            
+      smug = get_smugmug
+      @albums = smug.albums.collect {|album| [album.title, "#{album.id} #{album.key}"] }      
+    end
 end

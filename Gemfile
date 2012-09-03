@@ -14,6 +14,7 @@ gem 'omniauth-facebook', '1.4.1'
 gem 'omniauth-google-oauth2', '0.1.13'
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 gem 'will_paginate', '3.0.3'
+gem 'nested_form', :git => 'git://github.com/ryanb/nested_form.git'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

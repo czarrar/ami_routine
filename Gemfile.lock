@@ -5,6 +5,12 @@ GIT
     jquery-datatables-rails (1.11.0)
       jquery-rails
 
+GIT
+  remote: git://github.com/ryanb/nested_form.git
+  revision: 01ecf32dfc2c0de3ceb32edd7ffd1ad2bf96d4f1
+  specs:
+    nested_form (0.2.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -197,6 +203,7 @@ DEPENDENCIES
   faker (= 1.0.1)
   jquery-datatables-rails!
   jquery-rails (= 2.0.2)
+  nested_form!
   omniauth-facebook (= 1.4.1)
   omniauth-google-oauth2 (= 0.1.13)
   paperclip (= 3.1.4)

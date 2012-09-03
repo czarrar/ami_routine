@@ -1,0 +1,26 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  sub_subject_id: 1
+  name: MyString
+  description: MyText
+  notes: MyText
+
+two:
+  sub_subject_id: 1
+  name: MyString
+  description: MyText
+  notes: MyText
+# == Schema Information
+#
+# Table name: routine_templates
+#
+#  id             :integer         not null, primary key
+#  sub_subject_id :integer
+#  name           :string(255)
+#  description    :text
+#  notes          :text
+#  created_at     :datetime        not null
+#  updated_at     :datetime        not null
+#
+
