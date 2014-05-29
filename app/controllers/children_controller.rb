@@ -57,7 +57,7 @@ class ChildrenController < ApplicationController
     def set_parents_and_albums
       @parents = User.joins(:roles).where("roles.name = 'parent'")
             
-      smug = get_smugmug
-      @albums = smug.albums.collect {|album| [album.title, "#{album.id} #{album.key}"] }      
+      #smug = get_smugmug
+      #@albums = smug.albums.collect {|album| [album.title, "#{album.id} #{album.key}"] }      
     end
 end

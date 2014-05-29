@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
     end
     
     def smugmug_login
-      smug = Smile.auth('ismat7@gmail.com', 'hello101')
+      smug = Smile.auth('amiroutinetest@binkmail.com', 'hello101')
       session[:smugmug_session] = smug.session.id
       session[:smugmug_expires_on] = Time.now + 1.day
       return smug
