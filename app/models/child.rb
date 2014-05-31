@@ -13,7 +13,7 @@
 
 class Child < ActiveRecord::Base
   attr_accessor :album
-  attr_accessible :first_name, :last_name, :user_ids, :album, :child_users_attributes
+  attr_accessible :first_name, :last_name, :user_ids, :album, :album_id, :child_users_attributes
   
   has_and_belongs_to_many :routines
   
@@ -23,11 +23,11 @@ class Child < ActiveRecord::Base
                                 reject_if: proc { |attributes| attributes['user_id'].blank? },
                                 allow_destroy: true
   
-  before_save :albumize
+  #before_save :albumize
   
   validates :first_name, :presence => true
   validates :last_name, :presence => true
-  validates :user_ids, :presence => true
+  #validates :user_ids, :presence => true
   
   def albumize
     if album.present?
