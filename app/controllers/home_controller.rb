@@ -17,11 +17,10 @@ class HomeController < ApplicationController
           routines = []
         end
         
-        has_album = child.album_id.nil? || child.album_key.nil? ? false : true
+        has_album = child.album_id.nil? ? false : true
         if has_album
-          smug = get_smugmug
-          album = Smile::Album.find(:album_id => child.album_id, :album_key => child.album_key)
-          photos = album.photos
+          album = flickr.photosets.getPhotos( photoset_id: child.album_id )
+          photos = album.photo
           # keep the 5 most recent photos
           i = photos.length > 4 ? photos.length - 5 : 0
           photos = photos[i..-1]

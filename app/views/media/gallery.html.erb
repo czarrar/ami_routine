@@ -3,20 +3,21 @@
   <ul class="thumbs noscript">
         <% @media.each do |item| %>
           <li>
-            <%= link_to image_tag(item.tinyurl), item.mediumurl, :name => item.image_id, :class => "thumb" %>
+            <%= link_to image_tag( FlickRaw.url_t( item ) ), FlickRaw.url_m( item ), :name => item.id, :class => "thumb" %>
             <div class="caption">
               <div class="download">
-                <% if item.video640url.nil? %>
-                  <%= link_to "View Original", item.originalurl, :rel => "shadowbox" %>
+                <% if item.media == 'photo' %>
+                  <%= link_to "View Original", FlickRaw.url( item ), :rel => "shadowbox" %>
                 <% else %>
-                  <%= link_to "Play Video", item.video640url, :rel => "shadowbox;height=#{item.height};width=#{item.width}" %>
+                  <% player = flickr.photos.getSizes( photo_id: item.id ) %>
+                  <%= link_to "Play Video", player[ 7 ].source, :rel => "shadowbox;height=#{item.video.height};width=#{item.video.width}" %>
                 <% end %>
               </div>
               <div class="image-title">
-                <%= Time.parse(item.date).strftime("%B %-d, %Y") %>
+                <%= Time.parse(item.dates.taken).strftime("%B %-d, %Y") %>
               </div>
               <div class="image-desc">
-                <%= item.caption %>
+                <%= item.description %>
               </div>
             </div>
           </li>

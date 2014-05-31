@@ -8,12 +8,13 @@ class MediaController < ApplicationController
   
   def gallery
     child = current_user.children.find(params[:id])
-    @has_album = child.album_id.nil? || child.album_key.nil? ? false : true
+    @has_album = child.album_id.nil? ? false : true
     if @has_album
-      smug = get_smugmug
-      album = Smile::Album.find(:album_id => child.album_id, :album_key => child.album_key)
-      @media = album.photos
-#      binding.pry
+      album = flickr.photosets.getPhotos( photoset_id: child.album_id )
+      @media = album.photo      
+      @media.collect! do |photo|
+        flickr.photos.getInfo( photo_id: photo.id )
+      end
     end
     
   end

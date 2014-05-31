@@ -38,7 +38,7 @@
               <div class="carousel-inner">
                 <% child[:photos].each_with_index do |photo, i| %>
                 <div class="<%= i==0 ? 'active ' : '' %>item">
-                  <%= image_tag photo.smallurl %>
+                  <%= image_tag FlickRaw.url_m( photo ) %>
                 </div>
                 <% end %>
               </div>
